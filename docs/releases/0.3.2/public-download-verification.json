@@ -1,0 +1,60 @@
+{
+  "ok": true,
+  "authenticated": false,
+  "repository": "https://github.com/bycjhuang/AIDesignHub-OpenSource",
+  "release": "https://github.com/bycjhuang/AIDesignHub-OpenSource/releases/tag/v0.3.2",
+  "sourceCommit": "ea041adf6bb616aa36f0e09496aada8ab8e97d37",
+  "fullDownloadsVerified": [
+    {
+      "file": "AIDesignHub-0.3.2-source.json",
+      "bytes": 291,
+      "sha256": "211aba4da24247a7275780bde1b7118fe94509891babc285c0eef4b93a6ee9d8"
+    },
+    {
+      "file": "AIDesignHub-0.3.2-source.zip",
+      "bytes": 33674634,
+      "sha256": "0830bfb918bffe958f7bcc6f273017add9ba9f3ab6063e89903fc7f7919defcf"
+    },
+    {
+      "file": "AIDesignHub-0.3.2.manifest.json",
+      "bytes": 1195,
+      "sha256": "eb6fc0c000b28d854add400a10635abe597de0ba40693ab1df200403f38f007a"
+    },
+    {
+      "file": "AIDesignHub-0.3.2.manifest.json.sig.json",
+      "bytes": 224,
+      "sha256": "49f9069744b02d6fc72d3f63a40adcca408d9c47780e7e9f831445460a63a5d7"
+    },
+    {
+      "file": "AIDesignHub-release-public-key.json",
+      "bytes": 98,
+      "sha256": "a707c860d4659496adaf4b0e4d39c3987f5038f29a89fa5b1f4f957289ba9bbe"
+    },
+    {
+      "file": "AIDesignHub-Setup-0.3.2.exe",
+      "bytes": 661332698,
+      "sha256": "93d573c59229274f182d476d5a778b31fb71ab3d5a4b30bda6a3474db73d6814"
+    },
+    {
+      "file": "LICENSE",
+      "bytes": 34255,
+      "sha256": "79735a75d0274d2a5dcc240d11a0f81e34cfc3533939b7fce8e84e35a150a238"
+    },
+    {
+      "file": "SHA256SUMS.txt",
+      "bytes": 189,
+      "sha256": "8e8fd992b21c2af550158559187ab4d55c9c03453248e0ed534088e795ee8e6d"
+    },
+    {
+      "file": "THIRD-PARTY-NOTICES.md",
+      "bytes": 4398,
+      "sha256": "7b9ec1876f0033bfb9ea999a5cbcb9068e97d5de3068a33bf613593df55fb826"
+    },
+    {
+      "file": "verify-release.cjs",
+      "bytes": 5963,
+      "sha256": "d6ba13c353afd5a6c027081ac0631bdbf77dc927fffa729c9ca813276368d1d6"
+    }
+  ],
+  "signatureVerified": true
+}

@@ -14,21 +14,21 @@
 从可信仓库副本获取 `assets/release-public-key.json`，不要仅信任安装包下载目录里附带的公钥。安装 Node.js 后执行：
 
 ```powershell
-node scripts/release-manifest.cjs --verify --manifest release/AIDesignHub-0.3.1.manifest.json --signature release/AIDesignHub-0.3.1.manifest.json.sig.json --key assets/release-public-key.json
+node scripts/release-manifest.cjs --verify --manifest release/AIDesignHub-0.3.2.manifest.json --signature release/AIDesignHub-0.3.2.manifest.json.sig.json --key assets/release-public-key.json
 ```
 
 验签通过后，再逐个比较清单中的文件大小与 SHA256；工具会自动完成这两步。改动安装包、清单或替换签名公钥，都应验证失败。发布包也附带独立 `verify-release.cjs`，只依赖 Node 内置模块。
 
-桌面交付目录另附独立 Node 和「验证安装包.cmd」，无需先安装开发环境。正式发布清单、签名及 SHA256 另存于本仓库 `docs/releases/0.3.1/`，可从可信仓库下载并放到安装器旁进行核对。
+桌面交付目录另附独立 Node、Node 原许可和「验证安装包.cmd」，无需先安装开发环境。0.3.2 同一清单同时核验安装器与对应源码 ZIP，两者应放在清单旁。正式发布清单、签名及 SHA256 另存于本仓库 `docs/releases/0.3.2/`，可从可信仓库下载并核对。
 
 当前公钥 SHA256：`34b7d1f9fc4c18f7d804c3ac5cb4ace049a43358fbfcd61c8e62df68b3546b1a`。应通过你信任的维护者渠道核对它；签名可靠性取决于公钥来源和私钥保管。
 
 ## 明确的限制
 
 1. **没有 Windows Authenticode 代码签名证书。** 本轮分离签名提供发布包真实性检查，不消除 Windows 的未签名提示，也不是 CA 对发布者身份的认证。
-2. **没有宣称可重现构建或 SLSA 等级。** 来源记录与构建证明不等于已实现字节一致的独立重建。GitHub 官方要求私有 / 内部仓库使用构建证明时具有 Enterprise Cloud 套餐；当前仓库保持私有，工作流默认关闭 attestation，尚未运行验收。见 [GitHub 官方说明](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations)。
+2. **没有宣称可重现构建或 SLSA 等级。** 来源记录与构建证明不等于已实现字节一致的独立重建。0.3.2 Windows 发布在本机构建；新的源码仓库已经公开，GitHub / Sigstore 源码证明工作流尚未运行验收。
 3. **水印与 canary 可被移除。** 它们是核对版本与来源的辅助材料，不是防拷贝机制，也不单独构成对作品权属或侵权的结论。未实现用户级指纹、LSB / DCT 隐写或泄露者身份追踪。
 4. **导出格式范围有限。** 当前新增标记覆盖上述 Office 和本机 PNG 下载；复制到剪贴板、可编辑 Excalidraw 源文件、原始图片下载和既有历史成果不在同一水印覆盖范围。应用尚无统一 PDF 导出路径；Word 转成 PDF 时可保留页脚，但未经本轮 PDF 转换验收。
-5. **禁止商业用途需要明确授权条款。** 标准开源定义不允许仅因商业领域而限制使用；若希望源码可见但商业使用需另行授权，应另行决定适用于自有代码的授权方案。当前不擅自增加或改写许可证，Loomic 等第三方原有 MIT 许可和版权继续保留。见 [OSI 开源定义](https://opensource.org/osd) 与 [本仓库第三方说明](../THIRD-PARTY-NOTICES.md)。
+5. **本次 AGPL 发布允许合规商业使用和衍生发行。** 不额外附加竞品必须付费的限制；Loomic 等第三方原有 MIT 许可和版权继续保留。见 [许可范围](../COPYRIGHT.md) 与 [本仓库第三方说明](../THIRD-PARTY-NOTICES.md)。
 
 保留 Git 提交、签名清单、发布时间、原始素材与授权记录，能形成比单个隐藏字符串更完整的来源记录。

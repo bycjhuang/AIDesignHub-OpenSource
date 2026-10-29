@@ -1,0 +1,2 @@
+93d573c59229274f182d476d5a778b31fb71ab3d5a4b30bda6a3474db73d6814  AIDesignHub-Setup-0.3.2.exe
+0830bfb918bffe958f7bcc6f273017add9ba9f3ab6063e89903fc7f7919defcf  AIDesignHub-0.3.2-source.zip

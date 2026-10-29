@@ -10,7 +10,7 @@ AI Design Hub 面向建筑、室内、景观等设计团队，把项目上下文
 
 当前源码版本 **0.3.2**，处于持续迭代的可用原型阶段。自有整合代码按 **AGPL-3.0-only** 发布，第三方代码保留原许可；完整功能范围以 [当前状态](docs/CURRENT-STATE.md) 为准。
 
-旧版 0.3.1 Windows 安装器约 **618.6 MiB**，其原有签名与验收记录保留。0.3.2 开源准备、上游许可核对和新发布状态见 [开源审核记录](docs/open-source-audit-2026-10-29.md)。
+**[下载 0.3.2 Windows x64 安装包与对应源码](https://github.com/bycjhuang/AIDesignHub-OpenSource/releases/tag/v0.3.2)**。安装器约 **630.7 MiB**，附源码 ZIP、Ed25519 签名清单及验签工具；见 [本版发布验收](docs/release-0.3.2-2026-10-29.md) 与 [开源审核记录](docs/open-source-audit-2026-10-29.md)。旧版 0.3.1 的原有签名与验收记录保留。
 
 开源源码与官方安装包见 [AIDesignHub-OpenSource](https://github.com/bycjhuang/AIDesignHub-OpenSource)。许可范围见 [LICENSE](LICENSE)、[COPYRIGHT.md](COPYRIGHT.md) 与 [第三方声明](THIRD-PARTY-NOTICES.md)。AGPL 允许遵守协议的商业使用与衍生发行，不保证阻止合规的改名销售。用户项目、知识资料和模型密钥不随源码公开，用户输出也不会仅因使用本软件而自动受 AGPL 约束。
 
