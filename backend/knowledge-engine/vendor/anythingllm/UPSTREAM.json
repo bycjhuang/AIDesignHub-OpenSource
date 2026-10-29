@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "repository": "https://github.com/Mintplex-Labs/anything-llm",
+  "tag": "v1.18.0",
+  "commit": "3e4f9411b67f2dd7fa9fc6f2b95dfacbda0633ba",
+  "license": "MIT",
+  "archiveSha256": "014587011bb2ca8b6cdd07d8bf5ad332baf1f8848ad3f2930310a416cacef5d1",
+  "files": [
+    {
+      "source": "server/utils/vectorDbProviders/lance/index.js",
+      "original": "upstream/server/utils/vectorDbProviders/lance/index.js",
+      "originalSha256": "5fb3092729447ba8501d1fc8d6f7072caebd390d1692e3dbe74dfbe365271470",
+      "adapted": "runtime/lance.cjs",
+      "adaptedSha256": "2bdf0385f4c4947be0aca3e9b44931bccb30fbbc590adc6c80a663087040febd"
+    },
+    {
+      "source": "server/utils/vectorDbProviders/base.js",
+      "original": "upstream/server/utils/vectorDbProviders/base.js",
+      "originalSha256": "3772ea5aafe27d94c431d4685b9fa60f4ce6ed72c1d8f14222de17b496778899",
+      "adapted": "runtime/base.cjs",
+      "adaptedSha256": "3772ea5aafe27d94c431d4685b9fa60f4ce6ed72c1d8f14222de17b496778899"
+    },
+    {
+      "source": "server/utils/TextSplitter/index.js",
+      "original": "upstream/server/utils/TextSplitter/index.js",
+      "originalSha256": "04793dbda61c30a2b40be022c0a806265af66a3a47f2c7f32451f5d11b38ab83",
+      "adapted": "runtime/TextSplitter.cjs",
+      "adaptedSha256": "04793dbda61c30a2b40be022c0a806265af66a3a47f2c7f32451f5d11b38ab83"
+    }
+  ],
+  "licenseSha256": "782d2dc18a1ed9028ca992520f42b2e0b6187807da0d14455b8ae608e2e5692e",
+  "modifications": [
+    "LanceDb dependency imports replaced with per-instance host injection; crypto.randomUUID replaces uuid v4.",
+    "Static connection and STORAGE_DIR global replaced with an instance connection and storageDirectory.",
+    "Real upstream ingestion, cosine search, namespace management, and document deletion method bodies retained.",
+    "TextSplitter and VectorDatabase base are unchanged copies (only filename extension changed).",
+    "Optional upstream reranker is explicitly disabled; no remote provider, Prisma server, Express, collector, or official application UI is included."
+  ]
+}

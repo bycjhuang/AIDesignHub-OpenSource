@@ -1,0 +1,26 @@
+AIDesignHub
+Copyright (c) 2026 AIDesignHub authors and contributors.
+Maintainer: https://github.com/bycjhuang
+Source: https://github.com/bycjhuang/AIDesignHub-OpenSource
+
+Original AIDesignHub integration code: AGPL-3.0-only (see LICENSE).
+Third-party copyrights and license grants remain in force.
+
+DeepSeek Harness 0.2.1-rc.2
+Copyright (c) 2026 DeepSeek
+MIT license: third_party/deepseek-harness/LICENSE
+https://github.com/deepseek-ai/deepseek-harness
+
+Loomic, adapted from commit 21206c30054572291b9df000d84568aeca97aeda
+Copyright (c) 2026 Xinmin Zeng
+MIT license: third_party/loomic/LICENSE
+https://github.com/fancyboi999/Loomic
+
+Excalidraw 0.18.0
+Copyright (c) 2020 Excalidraw
+MIT license: third_party/excalidraw/LICENSE
+Fonts retain their own OFL/MIT notices. See THIRD-PARTY-NOTICES.md.
+
+See COPYRIGHT.md, THIRD-PARTY-NOTICES.md and third_party/UPSTREAMS.json
+for licensing scope, original notices, source references and modifications.
+This distribution does not imply endorsement by the upstream authors.

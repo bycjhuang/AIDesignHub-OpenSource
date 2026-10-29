@@ -1,0 +1,63 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+**/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+**/.next/
+/out/
+apps/web/out/
+supabase/.temp/
+
+# production
+/build
+**/dist
+**/.turbo
+
+# misc
+.DS_Store
+*.pem
+.worktrees/
+.superpowers/
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+.env
+.env.cloud
+
+# service account credentials (never commit)
+**/credentials/*.json
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+logs/
+supabase/supabase/
+
+tmp/
+temp/.claude/worktrees/
+
+# internal dev docs & operational secrets (keep locally, exclude from repo)
+.claude/skills/production-debugger/
+docs/superpowers/
+docs/CODE_QUALITY_AUDIT_REPORT.md
+docs/DEPLOY_CHECKLIST.md
+docs/home-discovery-library.md
+docs/lovart-deep-analysis-*.md
+docs/tech/pricing-profitability-report.md
+docs/tech/replicate-models-pricing.md

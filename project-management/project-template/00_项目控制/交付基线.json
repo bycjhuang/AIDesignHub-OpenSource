@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "0.1",
+  "template": true,
+  "projectId": null,
+  "baselineId": null,
+  "revision": null,
+  "status": "draft",
+  "approvedBy": null,
+  "approvedAt": null,
+  "stageIds": ["P00", "P01", "P02", "P03", "P04", "P05", "P06", "P07"],
+  "deliverables": [],
+  "progressPolicy": {
+    "method": "unconfirmed",
+    "denominator": "approved_applicable_deliverables",
+    "submissionSeparateFromAcceptance": true,
+    "emptyBaselineProgress": null
+  },
+  "requiredDeliverableFields": [
+    "deliverableId", "stageId", "title", "purpose", "scope",
+    "ownerId", "reviewerId", "dueAt", "applicability",
+    "inputVersions", "requiredFormats", "checks", "acceptanceCriteria",
+    "requiredConfirmations", "blockingDependencies"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "origin": "BYCJ Design unified desktop runtime/knowledge",
+  "scope": "Functionality only; no source application user data",
+  "files": [
+    {
+      "source": "runtime/knowledge/service.ts",
+      "sourceSha256": "8ec7c5060b5a79bb5f76f8f6fd4334f3f45d1b42e848b0d0bc5c4718741949cb",
+      "local": "runtime/knowledge/service.ts",
+      "localSha256": "d7e51551acacfbe1ad18fa57f4d2b6649ca4dbdb7e688ae1166580886d8121cb"
+    },
+    {
+      "source": "runtime/knowledge/embedding.ts",
+      "sourceSha256": "026cd31a939ba218b2ed0e78917c50b09180bcd939bade6685afd1f92c11d34d",
+      "local": "runtime/knowledge/embedding.ts",
+      "localSha256": "4aa558c17846aeb89efc938a74e9b94e2af0436636476068f08a78cf570d65d5"
+    },
+    {
+      "source": "runtime/knowledge/parser.ts",
+      "sourceSha256": "8ef155b7e2b3a320c1399230ba340c9bba7300ce7bdf81633a3ce0a526352862",
+      "local": "runtime/knowledge/parser.ts",
+      "localSha256": "fba1d4550cc96b05bee37e778d6adb8f599d2ff9d6e0010d17c64b319d87163e"
+    },
+    {
+      "source": "runtime/knowledge/officeParser.ts",
+      "sourceSha256": "7bc2f933b840c63135fe246487419d7bfd9414b5093bd4430a23f7117fb58767",
+      "local": "runtime/knowledge/officeParser.ts",
+      "localSha256": "7bc2f933b840c63135fe246487419d7bfd9414b5093bd4430a23f7117fb58767"
+    },
+    {
+      "source": "runtime/knowledge/anythingllm.ts",
+      "sourceSha256": "2f89241469a424f6c6573d13a74ffced3e41f92b55c4d4d235ff500a2ec8301a",
+      "local": "runtime/knowledge/anythingllm.ts",
+      "localSha256": "2f89241469a424f6c6573d13a74ffced3e41f92b55c4d4d235ff500a2ec8301a"
+    },
+    {
+      "source": "runtime/knowledge/search.ts",
+      "sourceSha256": "61b639634993af8ba696cc0cde79550a359af108ad3d28bea13d8e56da909abd",
+      "local": "runtime/knowledge/search.ts",
+      "localSha256": "61b639634993af8ba696cc0cde79550a359af108ad3d28bea13d8e56da909abd"
+    },
+    {
+      "source": "runtime/knowledge/corpus.ts",
+      "sourceSha256": "c4a67c71176f055a601ed0592cf85bb23e3983de50b42269a0862ad43c665d51",
+      "local": "runtime/knowledge/corpus.ts",
+      "localSha256": "c4a67c71176f055a601ed0592cf85bb23e3983de50b42269a0862ad43c665d51"
+    },
+    {
+      "source": "runtime/knowledge/export.ts",
+      "sourceSha256": "2bc38ca60fd5bf12e4c0d1d3583aff18a205934699b0c1262633c2adaf6a1e3b",
+      "local": "runtime/knowledge/export.ts",
+      "localSha256": "2bc38ca60fd5bf12e4c0d1d3583aff18a205934699b0c1262633c2adaf6a1e3b"
+    }
+  ],
+  "adaptations": [
+    "Standalone Node IPC worker",
+    "Offline-only E5 and OCR",
+    "Preserve full hit text",
+    "Independent Hub data directory",
+    "Preserve migrated display filenames and ingestion citation titles on reindex"
+  ],
+  "anythingllm": "vendor/anythingllm/UPSTREAM.json"
+}

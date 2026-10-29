@@ -1,0 +1,3 @@
+- insert:
+    - id: adh-brand
+      name: '@aidesign/dsh-client-ui-brand'

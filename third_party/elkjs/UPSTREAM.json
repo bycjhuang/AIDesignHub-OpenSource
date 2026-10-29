@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "version": "0.12.1",
+  "license": "EPL-2.0 OR GPL-3.0-or-later",
+  "selectedLicense": "GPL-3.0-or-later",
+  "npmGitHead": "624ae90aa37110033a8af59c5ccbb292708b4317",
+  "sourceArchives": [
+    {
+      "file": "elk-core-0.12.0-source.zip",
+      "sha256": "786e564d8969ece2579471947b7116edcf0c08a2c39dc066bf1bafeba2c96911",
+      "commit": "323312916048544e4e594eab3303cdb0d01e2929",
+      "entries": 3133
+    },
+    {
+      "file": "elkjs-0.12.1-source.zip",
+      "sha256": "26332783fd2c3e00a35fcdaec621c34a6e8f03c0dee6e2f38ea7f03eb6144aa5",
+      "commit": "624ae90aa37110033a8af59c5ccbb292708b4317",
+      "entries": 93
+    }
+  ]
+}

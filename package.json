@@ -1,0 +1,99 @@
+{
+  "name": "bycj-design-workbench-prototype",
+  "private": true,
+  "version": "0.3.2",
+  "license": "AGPL-3.0-only",
+  "description": "AIDesignHub human-AI project context and coordination workbench",
+  "main": "electron-main.cjs",
+  "scripts": {
+    "start": "node scripts/start.cjs",
+    "build:ai-design": "node scripts/build-loomic.cjs",
+    "test": "node --test tests/*.test.cjs",
+    "service": "node scripts/hub-service.cjs",
+    "audit:release": "node scripts/release-security.cjs --source",
+    "audit:licenses": "node scripts/open-source-license.cjs --check",
+    "prepare:licenses": "node scripts/open-source-license.cjs --generate",
+    "archive:source": "node scripts/archive-source.cjs",
+    "stage:installer": "node scripts/stage-installer-resources.cjs",
+    "dist": "npm run prepare:licenses && npm run audit:licenses && npm run build:ai-design && npm run stage:installer && electron-builder --win --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "43.1.1",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "com.bycj.aidesignhub",
+    "productName": "AIDesignHub",
+    "directories": {
+      "output": "release"
+    },
+    "asar": false,
+    "beforePack": "scripts/release-before-pack.cjs",
+    "afterPack": "scripts/release-after-pack.cjs",
+    "extraResources": [
+      {
+        "from": ".runtime/release-audit/build-source.json",
+        "to": "release-provenance.json"
+      },
+      {
+        "from": ".runtime/installer-resources/public/dsh-runtime/0.2.1-rc.2",
+        "to": "dsh-runtime/0.2.1-rc.2",
+        "filter": ["**/*", "!npm-cache/**", "!**/node_modules/.cache/**"]
+      },
+      {
+        "from": ".runtime/installer-resources/public/professional-mcp",
+        "to": "professional-mcp"
+      },
+      {
+        "from": ".runtime/installer-resources/public/knowledge",
+        "to": "knowledge"
+      },
+      {
+        "from": ".runtime/installer-resources/public/knowledge/node_modules",
+        "to": "knowledge/node_modules",
+        "filter": ["**/*"]
+      }
+    ],
+    "files": [
+      "electron-main.cjs",
+      "preload.cjs",
+      "index.html",
+      "*.js",
+      "*.css",
+      "backend/**/*",
+      "assets/**/*",
+      "Loomic-main/Loomic-main/apps/web/out/**/*",
+      "Loomic-main/Loomic-main/LICENSE",
+      "THIRD-PARTY-NOTICES.md",
+      "LICENSE",
+      "NOTICE",
+      "COPYRIGHT.md",
+      "third_party/**/*"
+    ],
+    "win": {
+      "icon": "assets/aidesignhub-icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "license": "LICENSE",
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "AIDesignHub",
+      "artifactName": "AIDesignHub-Setup-${version}.${ext}"
+    }
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.0",
+    "js-yaml": "4.3.2",
+    "pptxgenjs": "4.0.1",
+    "ws": "^8.20.0"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "0.1",
+  "template": true,
+  "status": "draft",
+  "projectId": null,
+  "projectName": null,
+  "projectType": null,
+  "city": null,
+  "ownerOrganization": null,
+  "projectManagerId": null,
+  "roles": [],
+  "directoryBindings": [],
+  "permittedModelProcessing": "unconfirmed",
+  "sourceRegister": [],
+  "confirmedDecisions": [],
+  "openQuestions": [],
+  "approvedBy": null,
+  "approvedAt": null
+}

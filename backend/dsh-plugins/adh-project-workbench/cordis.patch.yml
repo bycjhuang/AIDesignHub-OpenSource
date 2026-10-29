@@ -1,0 +1,3 @@
+- insert:
+    - id: adh-project-workbench
+      name: '@aidesign/dsh-project-workbench'

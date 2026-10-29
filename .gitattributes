@@ -1,0 +1,6 @@
+# Internal business discussion stays in the private development repository.
+# It is not needed to build or modify the released program.
+docs/open-source-strategy-2026-10-29.md export-ignore
+# Preserve whitespace in copied upstream license/copyright text.
+third_party/excalidraw/FONT-NOTICES.md -whitespace
+third_party/fonts/liberation-sans/LICENSE -text -whitespace

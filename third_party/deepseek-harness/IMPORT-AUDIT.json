@@ -1,0 +1,86 @@
+{
+  "version": "0.2.1-rc.2",
+  "integrityVerified": true,
+  "comparison": [
+    {
+      "file": "LICENSE",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/bin.js",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/dump-config-CWs_HdOc.js",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/dump-config-CxNkSYcK.js",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/dump-config-schema-D_PxIzpe.js",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/plugin-BiveYA7h.js",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/profile-boot-C14i-8IN.js",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/profile-boot.js",
+      "status": "unchanged"
+    },
+    {
+      "file": "package.json",
+      "status": "unchanged"
+    },
+    {
+      "file": "README.md",
+      "status": "unchanged"
+    },
+    {
+      "file": "README.zh.md",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/types/args.d.ts",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/types/bin.d.ts",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/types/dump-config-schema.d.ts",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/types/dump-config.d.ts",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/types/plugin.d.ts",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/types/process-shutdown.d.ts",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/types/profile-boot.d.ts",
+      "status": "unchanged"
+    },
+    {
+      "file": "lib/types/startup-diagnostics.d.ts",
+      "status": "unchanged"
+    },
+    {
+      "file": "README.i18n.yaml",
+      "status": "unchanged"
+    }
+  ]
+}

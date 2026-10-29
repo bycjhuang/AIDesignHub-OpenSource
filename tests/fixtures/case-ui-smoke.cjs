@@ -1,0 +1,101 @@
+'use strict';
+const fs=require('node:fs');const path=require('node:path');
+const {sourceUrl,page}=require('./smoke-case.cjs');
+const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+async function runCaseSmoke({win,backend,hub,caseService,gateway,appDir,openedUrls}){
+  await win.webContents.executeJavaScript(`(async()=>{
+    document.querySelector('[data-view="cases"]').click();
+    document.querySelector('#caseModeName').click();
+    document.querySelector('#caseCollectConnection').value='__local__';
+    document.querySelector('#caseCollectQuery').value=${JSON.stringify(sourceUrl)};
+    document.querySelector('#caseCollectQuery').dispatchEvent(new Event('input',{bubbles:true}));
+    if(document.querySelector('#caseModeLink').getAttribute('aria-pressed')!=='true'||document.querySelector('#caseCollectUrl').value!==${JSON.stringify(sourceUrl)}||document.querySelector('#caseCollectConnection option[value="__local__"]')||!document.querySelector('#casePageOnly').checked)throw new Error('粘贴链接必须切换采集模式，不能继续使用本机名称模型');
+    for(let i=0;i<80&&!document.querySelector('#caseCollectConnection option[value="zcode"]');i++)await new Promise(r=>setTimeout(r,50));
+    document.querySelector('#caseCollectUrl').value=${JSON.stringify(sourceUrl)};
+    document.querySelector('#casePageOnly').checked=false;
+    document.querySelector('#casePageOnly').dispatchEvent(new Event('change'));
+    document.querySelector('#caseCollectConnection').value='zcode';
+    document.querySelector('#caseCollectForm').requestSubmit();
+  })()`);
+  let item;
+  for(let i=0;i<100;i++){item=backend.store.cases.find(c=>c.sourceUrl===sourceUrl);if(item?.research?.runId)break;await delay(50);}
+  if(!item?.research?.runId)throw new Error('案例采集表单未建立调研任务');
+  if(item.research.status!=='waiting_agent'||item.openingDate!==null)throw new Error('案例应等待真实Agent，且不得将发布日期当成开业时间');
+  const grant=hub.createGrant({label:'case-smoke-client',projectId:item.projectId,memberId:'member_designer',scopes:['tasks:read','runs:write','cases:read']});
+  const call=async(name,args)=>{const response=await fetch(`${gateway.url}/v1/call`,{method:'POST',headers:{Authorization:`Bearer ${grant.token}`,'Content-Type':'application/json'},body:JSON.stringify({name,arguments:args})});const data=await response.json();if(!response.ok)throw new Error(`案例接口烟测失败：${response.status}`);return data.result;};
+  try{
+    await call('hub_run_claim',{runId:item.research.runId});
+    await call('hub_artifact_submit',{runId:item.research.runId,requestId:'case-ui-smoke-result',content:JSON.stringify({name:'江湾美术馆',area:'建筑面积 12000平方米',typeLabel:'美术馆',location:'上海市黄浦区',openingDate:null,designer:'测试设计院',summary:'<img src=x onerror="window.caseXss=true">测试摘要必须显示为文本。',evidence:[{field:'name',sourceUrl:page.finalUrl,quote:'项目名称：江湾美术馆'},{field:'area',sourceUrl:page.finalUrl,quote:'建筑面积：12000平方米'},{field:'typeLabel',sourceUrl:page.finalUrl,quote:'项目类型：美术馆'},{field:'location',sourceUrl:page.finalUrl,quote:'项目地址：上海市黄浦区'},{field:'designer',sourceUrl:page.finalUrl,quote:'设计单位：测试设计院'}]})});
+  }finally{hub.revokeGrant(grant.id);}
+  const detail=await win.webContents.executeJavaScript(`(async()=>{
+    const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+    const waitFor=async(predicate,label)=>{for(let i=0;i<120;i++){if(predicate())return;await sleep(50);}throw new Error(label);};
+    const selectedCard=()=>document.querySelector('[data-case-id="${item.id}"]');
+    const drawer=()=>document.querySelector('#caseModal');
+    const isOpen=()=>drawer().classList.contains('is-open');
+    const escape=()=>document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
+    const keyOpen=key=>{selectedCard().focus();selectedCard().dispatchEvent(new KeyboardEvent('keydown',{key,bubbles:true,cancelable:true}));};
+    for(let i=0;i<100;i++){const c=document.querySelector('[data-case-id="${item.id}"]');if(c?.textContent.includes('待人工确认'))break;await new Promise(r=>setTimeout(r,50));}
+    document.querySelector('[data-case-filter="culture"]').click();
+    const cultureVisible=Boolean(document.querySelector('[data-case-id="${item.id}"]'));
+    document.querySelector('[data-case-filter="hotel"]').click();
+    const excludedFromHotel=!document.querySelector('[data-case-id="${item.id}"]');
+    document.querySelector('[data-case-filter="culture"]').click();
+    if(!cultureVisible||!excludedFromHotel)throw new Error('文化案例分类与界面筛选不一致');
+    selectedCard().focus();selectedCard().click();
+    await waitFor(()=>isOpen(),'点击案例整张卡片未展开预览');
+    await waitFor(()=>document.querySelector('#casePreviewText').textContent.includes('项目沿滨水步道展开'),'项目正文未在预览中呈现');
+    await waitFor(()=>{const image=document.querySelector('#casePreviewMedia img');return image?.complete&&image.naturalWidth===400;},'预览图片没有成功解码');
+    await waitFor(()=>{const image=selectedCard()?.querySelector('.case-cover-image');return image?.complete&&image.naturalWidth===400;},'案例卡片没有显示真实图片预览');
+    const dialog=drawer().querySelector('[role="dialog"]')||drawer();
+    const rect=dialog.getBoundingClientRect();
+    const rightDrawer=rect.left>window.innerWidth*.3&&rect.right<=window.innerWidth+2&&dialog.getAttribute('aria-modal')!=='true';
+    if(!rightDrawer)throw new Error('案例详情未呈现为右侧非模态预览窗口');
+    const readerSafe=!window.caseReaderXss&&document.querySelector('#casePreviewText').textContent.includes('<script>');
+    const imageVisible=Boolean(selectedCard().querySelector('.case-cover-image')?.naturalWidth);
+    const descriptionVisible=document.querySelector('#casePreviewSummary').textContent.includes('临水展厅');
+    escape();await waitFor(()=>!isOpen(),'Escape 未关闭案例预览');
+    const escapeFocus=document.activeElement===selectedCard();
+    selectedCard().querySelector('a.case-source-link').click();await sleep(100);
+    const sourceDidNotOpenDrawer=!isOpen();
+    keyOpen('Enter');await waitFor(()=>isOpen(),'Enter 未打开案例预览');
+    document.querySelector('#caseModal [data-close-modal]').click();await waitFor(()=>!isOpen(),'关闭按钮未关闭案例预览');
+    const closeFocus=document.activeElement===selectedCard();
+    keyOpen(' ');await waitFor(()=>isOpen(),'空格键未打开案例预览');
+    const priorCard=selectedCard();window.dispatchEvent(new Event('case-hub-changed'));
+    await waitFor(()=>selectedCard()!==priorCard,'案例数据更新未完成');
+    const selectionPreserved=isOpen()&&document.querySelector('#caseModalTitle').textContent==='江湾美术馆';
+    if(!escapeFocus||!closeFocus||!sourceDidNotOpenDrawer||!selectionPreserved||!readerSafe||!descriptionVisible)throw new Error('案例预览焦点、嵌套链接、刷新或安全正文校验失败');
+    const link=document.querySelector('#caseDetailOriginal a');link.click();
+    return {source:link.getAttribute('href'),status:document.querySelector('#caseDetailStatus').textContent,area:document.querySelector('[data-case-field="area"]').textContent,opening:document.querySelector('[data-case-field="openingDate"]').textContent,safeText:!window.caseXss&&document.querySelector('#caseDetailNotes').textContent.includes('<img'),cultureVisible,excludedFromHotel,rightDrawer,imageVisible,descriptionVisible,readerSafe,escapeFocus,closeFocus,sourceDidNotOpenDrawer,selectionPreserved,keyboardEnter:true,keyboardSpace:true};
+  })()`);
+  await delay(150);
+  if(detail.source!==sourceUrl||!openedUrls.includes(sourceUrl)||!detail.safeText||!detail.area.includes('12000')||!detail.opening.includes('未找到'))throw new Error('案例来源/字段/安全文本检查未通过');
+  fs.writeFileSync(path.join(appDir,'.smoke-case-detail.png'),(await win.webContents.capturePage()).toPNG());
+  await win.webContents.executeJavaScript(`(async()=>{const previous=window.confirm;window.confirm=()=>true;document.querySelector('#caseApproveButton').click();for(let i=0;i<80;i++){const data=await window.bycjWorkbench.bootstrap();if(data.cases.find(c=>c.id==='${item.id}')?.research.status==='verified')break;await new Promise(r=>setTimeout(r,50));}window.confirm=previous;document.querySelector('#caseModal [data-close-modal]').click();})()`);
+  await delay(250);
+  if(caseService.find(item.id).research.status!=='verified')throw new Error('案例人工确认没有入库');
+  const legacy=await win.webContents.executeJavaScript(`(async()=>{
+    const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+    document.querySelector('[data-case-filter="all"]').click();
+    const legacyCard=document.querySelector('[data-case-id="case_1"]');
+    if(!legacyCard)throw new Error('旧案例兼容测试样本丢失');
+    const legacyHasNoFakeImage=!legacyCard.querySelector('.case-cover-image');
+    legacyCard.focus();legacyCard.click();
+    await sleep(200);
+    const legacyPreserved=document.querySelector('#caseModalTitle').textContent==='成都麓湖天府美食岛'&&document.querySelector('[data-case-field="designer"]').textContent.includes('万华');
+    const legacyHasNoBrokenReaderImage=!document.querySelector('#casePreviewMedia img');
+    document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
+    const remove=document.querySelector('[data-case-remove="case_4"]');
+    const priorConfirm=window.confirm;window.confirm=()=>true;
+    remove.click();
+    for(let i=0;i<80&&document.querySelector('[data-case-id="case_4"]');i++)await sleep(50);
+    window.confirm=priorConfirm;
+    const nestedDeleteDidNotOpenDrawer=!document.querySelector('#caseModal').classList.contains('is-open')&&!document.querySelector('[data-case-id="case_4"]');
+    if(!legacyHasNoFakeImage||!legacyPreserved||!legacyHasNoBrokenReaderImage||!nestedDeleteDidNotOpenDrawer)throw new Error('旧案例占位或嵌套删除行为不符合预期');
+    return {legacyHasNoFakeImage,legacyPreserved,legacyHasNoBrokenReaderImage,nestedDeleteDidNotOpenDrawer};
+  })()`);
+  fs.writeFileSync(path.join(appDir,'.smoke-cases.png'),(await win.webContents.capturePage()).toPNG());
+  return {...detail,...legacy,pastedLinkUsesPageMode:true,caseId:item.id,finalStatus:'verified',sourceOpened:true,sourceOpeningSimulated:true,agent:'protocol-fixture-not-real-model'};
+}
+module.exports={runCaseSmoke};

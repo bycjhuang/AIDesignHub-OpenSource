@@ -1,0 +1,3 @@
+- insert:
+    - id: adh-skill-policy
+      name: '@aidesign/dsh-skill-policy'

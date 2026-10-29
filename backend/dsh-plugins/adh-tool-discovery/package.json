@@ -1,0 +1,11 @@
+{
+  "name": "@aidesign/dsh-tool-discovery",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./index.js" },
+  "dsh": {
+    "engines": { "dsh": ">=0.2.1-rc.2" },
+    "bundle": { "patch": "./cordis.patch.yml" }
+  }
+}

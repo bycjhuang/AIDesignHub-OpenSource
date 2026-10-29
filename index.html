@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob: adh-case:; frame-src 'self' adh-case: http://127.0.0.1:*; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>AIDesignHub</title>
+  <link rel="icon" type="image/png" href="assets/aidesignhub-icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="agent-chat.css">
+  <link rel="stylesheet" href="case-name.css">
+  <link rel="stylesheet" href="project-research.css">
+  <link rel="stylesheet" href="image-collection.css">
+  <link rel="stylesheet" href="project-hub.css">
+  <link rel="stylesheet" href="hub-chat.css">
+  <link rel="stylesheet" href="chat-demo.css">
+  <link rel="stylesheet" href="team-directory.css">
+  <link rel="stylesheet" href="project-context.css">
+  <link rel="stylesheet" href="setup-center.css">
+  <link rel="stylesheet" href="knowledge-workbench.css">
+  <link rel="stylesheet" href="release-info.css">
+  <script src="assets/release-identity.js"></script>
+  <script src="assets/open-source-info.js"></script>
+  <script src="error-monitor.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="window-titlebar"><span>AIDesignHub</span><button id="releaseAbout" type="button" class="release-about-button" aria-label="关于 AIDesignHub 与版本来源">关于</button></div>
+    <aside class="sidebar">
+      <div class="brand" aria-label="AIDesignHub">
+        <div class="brand-mark"><img src="assets/aidesignhub-icon.png" alt=""></div>
+        <div class="brand-copy"><strong>AIDesignHub</strong><span>Your Design. Every AI. One Hub.</span></div>
+      </div>
+
+      <nav class="nav-list" aria-label="工作台导航">
+        <button class="nav-item is-active" data-view="dashboard"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span><span>项目驾驶舱</span></button>
+        <button class="nav-item legacy-hub-page" data-view="assistant" hidden><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></span><span>项目助手</span></button>
+        <button class="nav-item" data-view="workflow"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><span>设计流程</span></button>
+        <button class="nav-item" data-view="files"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span><span>项目上下文</span><span class="nav-count" id="fileNavCount" hidden>—</span></button>
+        <button class="nav-item" data-view="chat"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.8-.8L3 21l1.9-4.4A8.4 8.4 0 1 1 21 11.5z"/></svg></span><span>项目沟通</span><span class="nav-count" id="chatNavCount">0</span></button>
+        <button class="nav-item" data-view="knowledge"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20"/></svg></span><span>知识中心</span></button>
+        <button class="nav-item" data-view="cases"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.4"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.4"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.4"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.4"/></svg></span><span>案例与素材</span></button>
+        <button class="nav-item" data-view="adh-agent"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="10" y="10" width="4" height="4" rx="1"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></span><span>Agent Hub</span></button>
+        <button class="nav-item" data-view="ai-design"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/></svg></span><span>AI Design</span></button>
+        <button class="nav-item" data-view="schedule"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span>进度与风险</span><span class="nav-count danger">3</span></button>
+        <button class="nav-item" data-view="contracts"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 8l3 4 3-4M12 12v5M9.5 13h5M9.5 15.5h5"/></svg></span><span>合同与回款</span></button>
+        <button class="nav-item" data-view="team"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16.5 5.2a3 3 0 0 1 0 5.6M18 20a5.6 5.6 0 0 0-2.2-4.4"/></svg></span><span>团队与设置</span></button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="theme-switch" role="group" aria-label="背景主题">
+          <button type="button" class="theme-dot" data-theme-choice="light" title="浅色" aria-label="浅色主题"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.4v1.6M8 13v1.6M1.4 8h1.6M13 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M12.6 3.4l-1.1 1.1M4.5 11.5l-1.1 1.1"/></svg></button>
+          <button type="button" class="theme-dot" data-theme-choice="dark" title="深色" aria-label="深色主题"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 9.5A5.5 5.5 0 016.5 3a5.5 5.5 0 105.8 6.5z"/></svg></button>
+          <button type="button" class="theme-dot" data-theme-choice="minimal" title="简约" aria-label="简约主题"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="2.6" width="10.8" height="10.8" rx="2.4"/></svg></button>
+        </div>
+        <button class="setup-model-entry" id="hubGlobalModelSettings" type="button" aria-label="DesignHub 模型设置">
+          <span class="setup-model-icon" aria-hidden="true">✦</span><span class="setup-model-copy"><strong>DesignHub 模型设置</strong><small id="hubGlobalModelStatus">正在读取本机配置…</small></span><span aria-hidden="true">⚙</span>
+        </button>
+        <div class="privacy-note"><span class="status-dot"></span><div><strong>本地项目大脑</strong><span>资料默认保留在本机</span></div></div>
+        <button class="profile-mini" data-open-role-menu>
+          <span class="avatar">陈</span><span><strong>陈设计</strong><small id="sidebarRole">项目设计师</small></span><span class="chevron">⌃</span>
+        </button>
+      </div>
+    </aside>
+
+    <button id="aiDesignNavEdge" class="ai-design-nav-edge" type="button" aria-label="打开工作台导航" title="在左侧停留以展开导航"></button>
+    <main class="main-area">
+      <header class="topbar">
+        <button class="project-switcher" id="projectSwitcher">
+          <span class="project-logo">江</span><span><small>当前项目</small><strong id="topProjectName">江湾文化商业中心</strong></span><span class="chevron">⌄</span>
+        </button>
+      </header>
+
+      <div class="view-stack">
+        <section class="page-view" id="view-ai-design" data-page-title="AI Design">
+          <div class="ai-design-workspace">
+          <div class="card ai-design-placeholder" id="aiDesignLoading">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/></svg>
+            <h1>AI Design</h1>
+            <p id="aiDesignStatus" role="status">正在准备设计画布…</p>
+            <button class="secondary-button" id="aiDesignRetry" type="button" hidden>重试</button>
+          </div>
+          <iframe id="aiDesignFrame" title="AI Design 设计画布" sandbox="allow-scripts allow-same-origin allow-downloads" allow="clipboard-write" hidden></iframe>
+          </div>
+        </section>
+        <section class="page-view" id="view-assistant" data-page-title="项目助手">
+          <div class="page-heading"><div><p class="eyebrow">HUMAN + AI · PROJECT MEMORY</p><h1>把今天的沟通，留在项目里</h1><p>你来判断，助手来整理。确认后的事项进入看板，也成为下一次执行的背景。</p></div><button class="secondary-button" id="projectModelSettings">模型设置</button></div>
+          <div class="hub-assistant-layout">
+            <article class="card hub-composer-card">
+              <div class="card-heading"><h2>记录一件事</h2><span class="agent-status" id="projectModelState">正在读取配置</span></div>
+              <form id="projectInputForm">
+                <label class="hub-label" for="projectInput">电话、会议意见、工作安排或阶段调整</label>
+                <textarea id="projectInput" rows="7" maxlength="20000" placeholder="例如：刚接到业主电话，周五汇报延期。首层商业希望再开放一些，先安排两种方案比较。这件事还没最终定。" required></textarea>
+                <label class="hub-check"><input id="projectUseModel" type="checkbox">使用内置 AI 整理（会发送本条文字与下方项目摘要）</label>
+                <p class="hub-muted">不勾选时仅保存原文，再由你添加事项。暂不自动读取附件或推算进度。</p>
+                <div class="hub-actions"><button class="primary-button" id="projectPrepare" type="submit">保存原文并整理</button><button class="text-button" id="projectRefresh" type="button">刷新记录</button></div>
+              </form>
+              <p id="projectNotice" role="status" class="hub-notice" hidden></p>
+              <details class="hub-details"><summary>本次可供 AI / Agent 使用的项目上下文</summary><pre id="projectContextPreview"></pre><p class="hub-muted">不含合同集合、文件全文或任意本机路径；实际内容请在调用前核对。</p></details>
+            </article>
+            <aside class="card hub-records"><div class="card-heading"><h2>项目记录</h2><span id="projectDraftCount"></span></div><div id="projectDraftList"></div></aside>
+          </div>
+          <article class="card hub-review" id="projectDraftReview" hidden></article>
+          <article class="card hub-records"><div class="card-heading"><h2>确认回执与待同步提醒</h2></div><p class="hub-muted">本版的新提醒仅保存在项目主机本地，不会冒充已送达。跨终端分发仍需后续接入。</p><div id="projectReceipts"></div></article>
+        </section>
+        <section class="page-view" id="view-skills" hidden inert aria-hidden="true">
+          <div class="page-heading"><div><p class="eyebrow">TEAM KNOW-HOW</p><h1>把有效的方法，共享给团队</h1><p>企业内置与成员贡献统一管理；按真实运行评价，不把热度自动当成绩效。</p></div><button class="primary-button" id="skillCreate">＋ 贡献资源</button></div>
+          <div class="resource-tabs" role="tablist">
+            <button class="resource-tab is-active" data-tab="skills" role="tab">技能</button>
+            <button class="resource-tab" data-tab="mcp" role="tab">MCP 服务器</button>
+            <button class="resource-tab" data-tab="instructions" role="tab">指令</button>
+            <button class="resource-tab" data-tab="rtk" role="tab">RTK</button>
+          </div>
+          <div class="card hub-filter"><input id="skillSearch" placeholder="搜索资源名称或说明" aria-label="搜索资源"><select id="skillCategory" aria-label="资源分类"><option value="">全部分类</option><option>项目管理</option><option>案例调研</option><option>设计生产</option><option>知识整理</option><option>通用</option><option>其他</option></select><select id="resourceScope" aria-label="来源筛选"><option value="">全部来源</option><option value="local">本机资源</option><option value="team">团队共享</option><option value="builtin">企业内置</option></select><button class="secondary-button" id="skillRefresh">刷新</button></div>
+          <p id="skillNotice" class="hub-notice" role="status" hidden></p>
+          <div id="tabContent"></div>
+          <div class="hub-assistant-layout" id="skillSidePanels"><article class="card hub-records"><h2>我的草稿</h2><div id="skillDrafts"></div></article><article class="card hub-records"><h2>实际使用评价</h2><p class="hub-muted">仅任务执行人可对终态运行评价；作者不能给自己的技能打分。</p><div id="skillEligible"></div></article></div>
+          <article class="card hub-records" id="skillContributionsPanel"><h2>贡献记录</h2><p class="hub-muted">以下是复用与反馈记录，不是自动绩效或奖金评分。</p><div id="skillContributions"></div></article>
+        </section>
+        <section class="page-view is-active" id="view-dashboard" data-page-title="项目驾驶舱">
+          <div class="page-heading">
+            <div><p class="eyebrow">PROJECT COCKPIT</p><h1 id="dashboardGreeting">早上好，陈设计</h1><p id="dashboardSubline">你正在以项目设计师身份工作。AI优先显示技术任务、规范依据和今日交付。</p></div>
+            <div class="role-chip"><span class="avatar small">陈</span><span><small>当前项目角色</small><strong id="headerRole">项目设计师</strong></span><button data-open-role-menu>切换</button></div>
+          </div>
+
+          <div class="metrics-grid">
+            <article class="metric-card"><span class="metric-icon blue">◷</span><div><small>当前阶段</small><strong>概念设计 · 第 2 轮</strong><p>计划 8 月 16 日完成</p></div></article>
+            <article class="metric-card"><span class="metric-icon violet">◫</span><div><small>阶段成果</small><strong>18 / 26 项</strong><p>完成度 69%</p></div><div class="ring" style="--value:69"><span>69</span></div></article>
+            <article class="metric-card"><span class="metric-icon amber">!</span><div><small>待处理风险</small><strong>3 项高优先级</strong><p>其中 1 项阻断阶段门</p></div></article>
+            <article class="metric-card"><span class="metric-icon green">¥</span><div><small>下一回款节点</small><strong>概念方案确认</strong><p>应收 ¥480,000</p></div></article>
+          </div>
+
+          <article class="stage-strip card">
+            <div class="card-heading"><div><span class="section-kicker">设计阶段</span><h2>项目推进主线</h2></div><button class="text-button" data-view-target="workflow">查看完整流程 →</button></div>
+            <div class="stage-flow" id="dashboardStageFlow">
+              <button class="stage is-done" data-dashboard-phase="intake"><span>✓</span><strong>项目接收</strong><small>已通过</small></button>
+              <i></i><button class="stage is-done" data-dashboard-phase="research"><span>✓</span><strong>前期研究</strong><small>已通过</small></button>
+              <i></i><button class="stage is-done" data-dashboard-phase="massing"><span>✓</span><strong>强排测算</strong><small>已通过</small></button>
+              <i></i><button class="stage is-current" data-dashboard-phase="concept"><span>04</span><strong>概念设计</strong><small>进行中</small></button>
+              <i></i><button class="stage" data-dashboard-phase="develop"><span>05</span><strong>方案深化</strong><small>未开始</small></button>
+              <i></i><button class="stage" data-dashboard-phase="concept100"><span>06</span><strong>概念100</strong><small>未开始</small></button>
+              <i></i><button class="stage" data-dashboard-phase="approval"><span>07</span><strong>报规</strong><small>未开始</small></button>
+            </div>
+          </article>
+
+          <div class="dashboard-columns">
+            <article class="card ai-brief-card">
+              <div class="card-heading"><div><span class="section-kicker accent">ROLE-AWARE AI BRIEF</span><h2 id="briefTitle">给项目设计师的今日简报</h2></div><span class="live-badge"><i></i>持续更新</span></div>
+              <div class="brief-list" id="briefList"></div>
+              <div class="brief-footer"><span>依据：任务书、最近文件变化、会议纪要与项目计划</span><button class="text-button" id="explainBrief">查看判断依据</button></div>
+            </article>
+
+            <article class="card recent-card">
+              <div class="card-heading"><div><span class="section-kicker">项目事件</span><h2>最近发生了什么</h2></div><button class="icon-button subtle" id="recentEventsButton">•••</button></div>
+              <div class="event-list">
+                <div class="event-row"><span class="event-icon blue">3D</span><div><strong>总图模型 V23 已更新</strong><p>Rhino · 总图组 · 今天 09:42</p></div><span class="event-tag">模型</span></div>
+                <div class="event-row"><span class="event-icon violet">会</span><div><strong>第 2 轮业主沟通纪要已归档</strong><p>提取 6 项行动，2 项待确认</p></div><span class="event-tag">纪要</span></div>
+                <div class="event-row"><span class="event-icon amber">!</span><div><strong>模型与指标表版本不一致</strong><p>指标表比模型早 2 个版本</p></div><span class="event-tag warning">风险</span></div>
+                <div class="event-row"><span class="event-icon green">图</span><div><strong>新增 12 张商业街对标案例</strong><p>AI已完成标签与来源记录</p></div><span class="event-tag">案例</span></div>
+              </div>
+            </article>
+          </div>
+
+          <div class="dashboard-columns lower">
+            <article class="card deliverable-card">
+              <div class="card-heading"><div><span class="section-kicker">阶段成果</span><h2>概念设计交付完整度</h2></div><strong class="percentage">69%</strong></div>
+              <div class="progress-large"><span style="width:69%"></span></div>
+              <div class="deliverable-grid">
+                <div><span class="check done">✓</span><p><strong>概念叙事</strong><small>已确认</small></p></div>
+                <div><span class="check done">✓</span><p><strong>总图方案</strong><small>V23</small></p></div>
+                <div><span class="check">4/8</span><p><strong>效果图</strong><small>尚缺 4 张</small></p></div>
+                <div><span class="check warn">!</span><p><strong>面积指标</strong><small>等待复核</small></p></div>
+                <div><span class="check">6/9</span><p><strong>分析图</strong><small>完成 6 项</small></p></div>
+                <div><span class="check">—</span><p><strong>动画脚本</strong><small>尚未开始</small></p></div>
+              </div>
+            </article>
+            <article class="card quick-card">
+              <div class="card-heading"><div><span class="section-kicker">快速开始</span><h2>从成果出发，不必先聊天</h2></div></div>
+              <div class="quick-grid">
+                <button data-view-target="knowledge"><span>◎</span><strong>查地方规范</strong><small>带页码与出处</small></button>
+                <button data-view-target="cases"><span>▦</span><strong>找对标案例</strong><small>生成案例比较板</small></button>
+                <button data-view-target="assistant"><span>✦</span><strong>记录项目事项</strong><small>沟通变为可核对的记录</small></button>
+                <button data-view-target="skills"><span>◇</span><strong>Agent Hub 技能</strong><small>查看本机与团队共享技能</small></button>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="page-view" id="view-workflow" data-page-title="设计流程">
+          <div class="page-heading"><div><p class="eyebrow">STAGE WORKSPACE</p><h1>项目推进看板</h1><p>负责人维护阶段与重点，成员更新任务；每项变更留有记录，不从文件数量猜测完成度。</p></div><button class="secondary-button" id="editWorkflowButton">流程使用说明</button></div>
+          <div class="workflow-layout">
+            <aside class="phase-rail" id="phaseRail"></aside>
+            <article class="phase-workspace card" id="phaseWorkspace"></article>
+          </div>
+        </section>
+
+        <section class="page-view" id="view-files" data-page-title="项目上下文">
+          <div class="page-heading"><div><p class="eyebrow">PROJECT CONTEXT</p><h1>项目上下文</h1><p>把项目事实、计划与决定留在这里。新的整理建议先由项目负责人审批，再成为执行依据。</p></div><button class="primary-button" data-view-target="assistant">与 Design Hub 沟通</button></div>
+          <div id="projectContextWorkspace" aria-live="polite"></div>
+          <details class="context-source-files" id="contextSources"><summary>来源资料与项目文件</summary>
+          <div class="context-source-heading"><p>文件是项目上下文的依据，不因上传或修改就自动成为已确认事实。</p><button class="secondary-button" id="bindFolderButton">选择项目文件夹</button></div>
+          <div class="empty-connection card" id="folderEmpty">
+            <div class="folder-illustration">▣</div><h2>查看本地项目资料</h2><p>列出模型、图纸、文本和图片的文件信息；不将更新时间当作设计完成情况。</p><button class="primary-button" id="bindFolderButtonSecondary">选择文件夹</button><small>只有你主动选择的文件夹会被扫描</small>
+          </div>
+          <div class="folder-dashboard is-hidden" id="folderDashboard">
+            <article class="card folder-hero"><div><span class="section-kicker">已连接项目目录</span><h2 id="folderProjectName">—</h2><p id="folderPath">—</p></div><div><span class="sync-pill"><span class="status-dot"></span>只读连接</span><button class="secondary-button" id="rescanFolderButton">重新选择</button></div></article>
+            <div class="file-stats" id="fileStats"></div>
+            <article class="card"><div class="card-heading"><div><span class="section-kicker">RECENT CHANGES</span><h2>最近更新文件</h2></div><span id="scanTimestamp"></span></div><div class="file-table" id="recentFiles"></div></article>
+          </div>
+          </details>
+        </section>
+
+        <section class="page-view chat-page" id="view-chat" data-page-title="项目群聊">
+          <div class="page-heading chat-heading"><div><p class="eyebrow">PROJECT COMMUNICATION</p><h1>项目群聊与决策记录</h1><p>所有项目沟通都进入项目上下文；重要消息可以直接沉淀为决策、任务或风险。</p></div><div class="heading-actions"><button class="secondary-button" id="teamSyncButton">团队同步</button><button class="secondary-button" id="chatSearchButton">搜索聊天</button><button class="primary-button" id="newDecisionButton">＋ 新建项目决策</button></div></div>
+          <div class="chat-workspace card">
+            <aside class="channel-panel">
+              <div class="chat-project"><span class="project-logo">江</span><div><strong id="chatProjectName">江湾文化商业中心</strong><small id="teamSyncLabel"><i class="status-dot"></i> 本地项目消息库</small></div></div>
+              <div class="channel-section"><div class="channel-title"><span>频道</span><button id="channelInfoButton">＋</button></div><div id="channelList" class="channel-list"></div></div>
+              <div class="channel-section members-section"><div class="channel-title"><span>项目成员</span><button id="addMemberButton">＋</button></div><div id="chatMemberList" class="chat-member-list"></div></div>
+            </aside>
+            <section class="conversation-panel">
+              <header class="conversation-head"><div><strong id="conversationTitle">项目群聊</strong><small id="conversationDescription">项目组日常沟通与跨专业协调</small></div><div><button class="icon-button" id="messageSearchToggle" aria-label="搜索频道消息">⌕</button><button class="icon-button" id="channelMembersButton" aria-label="查看成员">♙</button></div></header>
+              <div class="message-search is-hidden" id="messageSearchBar"><span>⌕</span><input id="messageSearchInput" placeholder="搜索本项目全部聊天记录"><button class="text-button" id="closeMessageSearch">关闭</button></div>
+              <div class="message-list" id="messageList"></div>
+              <div class="attachment-preview is-hidden" id="attachmentPreview"></div>
+              <form class="team-chat-composer" id="teamChatComposer">
+                <textarea id="teamChatInput" rows="3" placeholder="在项目中发消息；输入 @ 可以提醒成员……"></textarea>
+                <div class="composer-actions"><div><button type="button" class="composer-icon" id="attachChatFile" aria-label="添加附件">＋</button><button type="button" class="composer-icon" id="insertDecisionHint" aria-label="输入决策模板">决</button><span>Enter 发送 · Shift+Enter 换行</span></div><button type="submit" class="primary-button" id="sendTeamMessage">发送</button></div>
+              </form>
+            </section>
+            <aside class="decision-panel">
+              <div class="decision-panel-head"><div><span class="section-kicker accent">DECISION LEDGER</span><h2>项目决策簿</h2></div><span id="decisionCount">0</span></div>
+              <p>从聊天中沉淀的正式决定，保留原始消息作为证据。</p>
+              <div class="decision-list" id="decisionList"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="page-view" id="view-knowledge" data-page-title="知识中心">
+          <div id="knowledge-workbench-root"></div>
+          <div id="knowledge-legacy-view" hidden inert>
+          <div class="page-heading"><div><p class="eyebrow">LOCAL KNOWLEDGE</p><h1>项目知识中心</h1><p>规范、任务书、合同、纪要和企业经验不是一个文件列表，而是可引用的设计依据。</p></div><div class="heading-actions"><select class="knowledge-type-select" id="knowledgeImportScope" aria-label="导入资料归属"><option value="local">导入到本机</option><option value="team">导入到团队共享</option></select><select class="knowledge-type-select" id="knowledgeImportType" aria-label="导入资料类型"><option value="project">项目资料</option><option value="regulation">规范与技术规定</option><option value="meeting">会议纪要</option><option value="enterprise">企业标准</option><option value="contract">合同与商务资料</option></select><button class="secondary-button" id="exportBackupButton">导出项目备份</button><button class="primary-button" id="importKnowledgeButton">＋ 导入本地资料</button></div></div>
+          <div class="knowledge-search card"><span>⌕</span><input id="knowledgeQuery" value="本项目商业裙房的消防车道转弯半径需要注意什么？" aria-label="知识库提问"><button class="primary-button" id="knowledgeAsk">检索项目知识</button></div>
+          <div class="knowledge-layout">
+            <article class="card collection-panel"><div class="card-heading"><h2>知识集合</h2><span id="knowledgeDocCount">0 份资料</span></div><div class="collection-list">
+              <button data-knowledge-filter="regulation"><span class="collection-icon blue">规</span><p><strong>国家与地方规范</strong><small data-knowledge-count="regulation">0 份</small></p><em>›</em></button>
+              <button class="is-selected" data-knowledge-filter="project"><span class="collection-icon violet">项</span><p><strong>当前项目资料</strong><small data-knowledge-count="project">0 份</small></p><em>›</em></button>
+              <button data-knowledge-filter="meeting"><span class="collection-icon amber">会</span><p><strong>会议与决策记录</strong><small data-knowledge-count="meeting">0 份</small></p><em>›</em></button>
+              <button data-knowledge-filter="enterprise"><span class="collection-icon green">企</span><p><strong>企业设计标准</strong><small data-knowledge-count="enterprise">0 份</small></p><em>›</em></button>
+              <button data-knowledge-filter="contract"><span class="collection-icon rose">同</span><p><strong>合同与商务资料</strong><small data-knowledge-count="contract">0 份</small></p><em>›</em></button>
+            </div><div class="knowledge-doc-list" id="knowledgeDocList"></div></article>
+            <article class="card answer-panel" id="knowledgeAnswer">
+              <div class="answer-head"><span class="ai-orb">✦</span><div><strong>本地项目知识助手</strong><small>答案只使用已经导入本机的真实资料</small></div><span class="evidence-badge">等待检索</span></div>
+              <div class="answer-content"><p>导入资料后输入问题即可检索。</p></div>
+            </article>
+          </div>
+          </div>
+        </section>
+
+        <section class="page-view" id="view-cases" data-page-title="案例与素材">
+          <div class="page-heading"><div><h1>案例与素材</h1><p>收集值得参考的项目。选中案例，交给 ADH 结合当前项目继续分析。</p></div><div class="heading-actions image-collection-entry"><button class="text-button" id="openImageCollection" type="button">采集网页图片</button><button class="secondary-button" id="openProjectImageLibrary" type="button">项目素材库</button><button class="secondary-button" id="openCaseCollector" type="button" hidden>收集案例</button><button class="primary-button" id="openProjectResearch" type="button">让 ADH 帮我找</button></div></div>
+          <article class="card case-link-collector" id="caseCollectorPanel">
+            <div class="card-heading"><div><h2 id="caseCollectorTitle">保存案例链接</h2><p class="hub-muted">文章和可获取的图片会保存在当前项目。</p></div></div>
+            <div class="case-collect-mode" role="group" aria-label="案例收集方式" hidden><button type="button" id="caseModeName" aria-pressed="false">交给 ADH 研究</button><button type="button" id="caseModeLink" aria-pressed="true">从链接采集</button></div>
+            <form id="caseCollectForm" class="agent-form">
+              <div class="case-collect-fields"><label id="caseNameField" hidden>案例名称<input id="caseCollectQuery" maxlength="4096" minlength="2" disabled autocomplete="off"></label><label id="caseUrlField"><span class="visually-hidden">案例原始链接</span><input id="caseCollectUrl" type="url" placeholder="粘贴设计网站、公众号等文章链接 https://…" required autocomplete="off" spellcheck="false"></label><label hidden>执行器<select id="caseCollectConnection"></select></label><label class="case-scope-choice"><span class="visually-hidden">保存范围</span><select id="caseCollectScope" aria-label="保存范围"><option value="local">个人案例</option><option value="team">团队共享</option></select></label><button class="primary-button" type="submit" id="caseCollectSubmit">收集案例</button></div>
+              <div class="case-collect-options" hidden><label id="casePageOnlyChoice"><input id="casePageOnly" type="checkbox" checked>保存文章与图片</label></div>
+            </form>
+          </article>
+          <div class="case-toolbar card"><div class="search-field"><span>⌕</span><input id="caseSearch" placeholder="搜索项目、设计单位、产品类型或设计特征"></div><div class="filter-chips"><button class="is-active" data-case-filter="all">全部</button><button data-case-filter="commercial">商业综合体</button><button data-case-filter="residential">住宅</button><button data-case-filter="hotel">酒店</button><button data-case-filter="culture">文化建筑</button></div><button class="secondary-button" id="caseAdvancedFilter">按地区/标签筛选</button></div>
+          <div class="case-selection-bar" id="caseSelectionBar" hidden><div><strong id="caseSelectionCount" aria-live="polite">已选 0 个案例</strong><span id="caseSelectionNames"></span></div><div><label class="case-selection-style"><span>PPT 风格</span><select id="caseSelectionStyle" aria-label="案例 PPT 风格"><option value="brief">简报版</option><option value="editorial">杂志版</option></select></label><button class="text-button" id="caseSelectionClear" type="button">清空</button><button class="primary-button" id="caseSelectionSend" type="button">交给 ADH</button></div></div>
+          <div class="case-grid" id="caseGrid"></div>
+        </section>
+
+        <section class="page-view" id="view-tools" data-page-title="专业软件">
+          <div class="page-heading"><div><p class="eyebrow">PROFESSIONAL TOOL BRIDGE</p><h1>专业软件连接中心</h1><p>Agent根据任务选择正确工具；不是用一个聊天框代替所有专业软件。</p></div><button class="secondary-button" id="detectAppsButton">重新检测本机软件</button></div>
+          <div class="tool-principle card"><span class="ai-orb">✦</span><div><strong>AI负责编排工作，不替代专业软件</strong><p>模型仍在 Rhino / Archicad 中保持准确；视觉表达进入 Illustrator；长文本和正式文本进入 InDesign；会议与阶段汇报可以进入 PowerPoint 或网页汇报。</p></div></div>
+          <div class="tool-grid" id="toolGrid"></div>
+          <article class="card connector-roadmap"><div class="card-heading"><div><span class="section-kicker">连接深度</span><h2>每个软件不是简单“打开”</h2></div></div><div class="connector-levels"><div><span>01</span><strong>文件识别</strong><p>知道哪些文件属于哪个项目、阶段和版本。</p></div><i>→</i><div><span>02</span><strong>上下文传递</strong><p>把任务、参数、素材和设计依据交给专业软件。</p></div><i>→</i><div><span>03</span><strong>受控操作</strong><p>通过插件或脚本执行明确命令，并要求人工确认。</p></div><i>→</i><div><span>04</span><strong>成果回收</strong><p>读取结果、生成版本事件、复核指标和交付完整度。</p></div></div></article>
+        </section>
+
+        <section class="page-view" id="view-schedule" data-page-title="进度与风险">
+          <div class="page-heading"><div><p class="eyebrow">PROJECT CONTROL</p><h1>待推进事项与风险</h1><p>来自人工登记与确认后的项目记录。到期提醒由程序计算，不等于 AI 已判断项目滞后。</p></div><div class="heading-actions"><button class="primary-button" data-hub-new-risk>＋ 记录风险</button><button class="secondary-button" id="exportWeeklyReportButton">导出周报</button></div></div>
+          <div class="control-grid">
+            <article class="card schedule-card"><div class="card-heading"><div><span class="section-kicker">MILESTONES</span><h2>项目里程碑</h2></div><span class="health-badge warning">轻度滞后 2 天</span></div><div class="gantt" id="gantt"></div></article>
+            <article class="card risk-card"><div class="card-heading"><div><span class="section-kicker accent">RISKS</span><h2>需要管理介入</h2></div><span>3 项</span></div><div class="risk-list" id="riskList"></div></article>
+          </div>
+          <article class="card progress-evidence"><div class="card-heading"><div><span class="section-kicker">HUMAN-LED PROJECT CONTROL</span><h2>项目状态怎样更新</h2></div></div><div class="evidence-flow"><div><strong>人判断</strong><small>电话、纪要、任务状态</small></div><i>→</i><div><strong>助手整理</strong><small>提取待确认事项</small></div><i>→</i><div><strong>确认写入</strong><small>保存原文与变更回执</small></div><i>→</i><div><strong>看板与上下文</strong><small>下一次派单按需携带</small></div></div><p class="hub-muted">尚未建立正式交付基线时，不显示项目完成百分比。工时不由文件活跃度或 Agent 运行时长自动推算。</p></article>
+        </section>
+
+        <section class="page-view" id="view-contracts" data-page-title="合同与回款">
+          <div class="page-heading"><div><p class="eyebrow">CONTRACT & CASHFLOW</p><h1>合同、变更与回款</h1><p>让设计节点和经营节点连接；AI负责提醒与留证，正式判断由负责人确认。</p></div><button class="secondary-button" id="viewContractSourceButton">查看合同原文</button></div>
+          <div class="contract-summary"><article class="metric-card"><span class="metric-icon blue">¥</span><div><small>合同总额</small><strong>¥ 2,400,000</strong><p>含税设计费</p></div></article><article class="metric-card"><span class="metric-icon green">✓</span><div><small>已回款</small><strong>¥ 720,000</strong><p>30% · 启动款</p></div></article><article class="metric-card"><span class="metric-icon amber">◷</span><div><small>下一笔应收</small><strong>¥ 480,000</strong><p>概念确认后 7 日内</p></div></article><article class="metric-card"><span class="metric-icon rose">＋</span><div><small>潜在范围变更</small><strong>2 项待确认</strong><p>预计新增 11.5 人日</p></div></article></div>
+          <div class="contract-layout"><article class="card"><div class="card-heading"><div><span class="section-kicker">PAYMENT MILESTONES</span><h2>付款节点</h2></div></div><div class="payment-timeline" id="paymentTimeline"></div></article><article class="card"><div class="card-heading"><div><span class="section-kicker accent">COMMERCIAL ALERT</span><h2>AI经营提醒</h2></div></div><div class="commercial-alert"><span>!</span><h3>业主本轮高度调整可能超出已确认范围</h3><p>概念方向已于 7 月 18 日书面确认。7 月 22 日新增的高度及产品组合调整影响总图、模型、效果图与面积指标。</p><ul><li>保存业主指令与会议纪要；</li><li>统计返工人日和受影响成果；</li><li>由项目经理判断是否发出范围变更确认。</li></ul><button class="primary-button" id="generateScopeReportButton">生成变更影响清单</button></div></article></div>
+        </section>
+
+        <template id="legacyAgentPageMarkup">
+        <section class="page-view agent-page" id="view-agents" data-page-title="Agent 协作" aria-labelledby="agentPageTitle">
+          <div class="page-heading agent-chat-heading">
+            <div><p class="eyebrow">AGENT COLLABORATION</p><h1 id="agentPageTitle">Agent 协作</h1><p id="agentChatSubtitle">说出你的设计需求，让选定的 Agent 来执行。</p></div>
+            <div class="heading-actions"><button class="text-button" type="button" id="agentNewChat">＋ 新对话</button><button class="secondary-button" type="button" id="agentOpenHistory">历史记录</button><button class="secondary-button" type="button" id="agentOpenSettings">⚙ 设置</button></div>
+          </div>
+          <div class="agent-chat-shell">
+            <div class="agent-chat-scroll" id="agentChatScroll">
+              <div class="agent-chat-welcome" id="agentChatWelcome"><span class="agent-chat-emblem" aria-hidden="true">✦</span><p class="eyebrow">与你的设计工作一起推进</p><h2>今天想推进什么工作？</h2><p>梳理一个问题，研究一个案例，或把想法变成可执行的任务。</p><div class="agent-chat-prompts"><button type="button" data-agent-prompt="帮我梳理一份建筑设计任务书的研读清单，先告诉我需要提供哪些资料。"><strong>梳理设计任务</strong><span>从任务书到资料缺项清单</span></button><button type="button" data-agent-prompt="我想研究一个建筑对标案例，请先和我确认调研目标与需要提供的来源链接。"><strong>调研参考案例</strong><span>提炼有依据的设计启发</span></button><button type="button" data-agent-prompt="帮我制定概念设计阶段的工作计划，请先询问项目类型、时间节点与团队情况。"><strong>推进项目计划</strong><span>拆解工作与待确认事项</span></button></div></div>
+              <div class="agent-chat-messages" id="agentChatMessages" role="log" aria-label="Agent 对话与执行进度" aria-live="polite" aria-relevant="additions text"></div>
+            </div>
+            <div class="agent-chat-bottom">
+              <p id="agentChatNotice" class="agent-chat-notice" role="status" hidden></p>
+              <form class="agent-chat-composer" id="agentChatForm">
+                <label class="agent-sr-only" for="agentChatInput">发送给 Agent 的需求</label><textarea id="agentChatInput" rows="3" maxlength="20000" placeholder="描述你的需求，也可以粘贴一个案例链接…" required></textarea>
+                <div class="agent-chat-composer-bar"><div class="agent-chat-picker"><label for="agentChatConnection">执行 Agent</label><select id="agentChatConnection" aria-label="选择执行 Agent"></select><button class="text-button" id="agentChatConfigure" type="button">配置</button></div><div class="agent-chat-send-controls"><span class="agent-enter-tip">Enter 发送 · Shift + Enter 换行</span><button class="primary-button" id="agentChatSend" type="submit" disabled>发送 ↑</button></div></div>
+                <details class="agent-chat-options" id="agentChatOptions"><summary>任务选项 <span id="agentChatOptionsSummary">通用协作 · 未开放项目资料</span></summary><div><label>专业 Skill<select id="agentChatSkill"></select></label><label class="agent-chat-tools"><input id="agentChatContext" type="checkbox">携带项目摘要（阶段、有效决定、风险与任务）</label><label class="agent-chat-tools"><input id="agentChatProjectTools" type="checkbox">允许本次只读检索当前项目资料</label></div><p>项目摘要在本次派单时固定；先到项目助手查看内容。默认不携带、不授予检索权限；外部执行器自身的文件与网络权限仍由其配置控制。</p></details>
+              </form>
+              <p class="agent-chat-footnote" id="agentChatConnectionNote">正在读取 Agent 配置…</p>
+            </div>
+          </div>
+          <dialog id="agentSettingsDialog" class="agent-dialog" aria-labelledby="agentSettingsTitle"><header class="agent-dialog-head"><div><h2 id="agentSettingsTitle">连接你的 Agent</h2><p>先发现本机安装，再配对接口；模型登录由各 Agent 自己管理。</p></div><div class="heading-actions"><button class="secondary-button" type="button" id="agentRefresh">刷新状态</button><button class="icon-button" type="button" id="agentCloseSettings" aria-label="关闭执行器设置">×</button></div></header><div class="agent-dialog-body">
+          <div class="agent-notice" role="status" id="agentNotice">正在读取本机 Agent 配置…</div>
+          <section class="card agent-panel agent-discovery" aria-labelledby="agentDiscoveryTitle">
+            <div class="card-heading"><div><span class="section-kicker">本机 Agent · 配对助手</span><h2 id="agentDiscoveryTitle">让 DesignHub 自动准备执行器</h2></div><div class="heading-actions"><button class="text-button" type="button" id="agentDetectRuntimes">仅重新检测</button><button class="primary-button" type="button" id="agentAutoPair">自动检测并配对</button></div></div>
+            <p class="agent-pairing-intro">Hub 查找本机安装、配置可用接口，并汇总需要你处理的登录或客户端授权。已配置内置模型时，可辅助分析连接诊断；不发送项目资料，不自动测试外部模型。</p>
+            <div class="agent-auto-setup-state" id="agentAutoPairState" role="status" hidden></div>
+            
+            <div class="agent-runtime-list" id="agentRuntimeList"></div>
+          </section>
+          <div class="agent-setup-grid">
+            <details id="agentAdvancedConnection" class="agent-advanced-settings"><summary>高级设置与自定义接入<span>手动修改程序路径、启动参数、工作目录与连接方式</span></summary>
+            <div class="agent-provider-grid" id="agentProviderGrid" aria-label="可配置的 Agent 客户端"></div>
+            <article class="card agent-panel">
+              <div class="card-heading"><div><span class="section-kicker">OUTBOUND / CONNECTION</span><h2>执行器连接</h2></div><span class="event-tag" id="agentConnectionState">未选择</span></div>
+              <form class="agent-form" id="agentConnectionForm">
+                <input type="hidden" id="agentConnectionId">
+                <div class="form-row"><label>客户端<select id="agentProvider" required></select></label><label>连接名称<input id="agentConnectionLabel" maxlength="100" required autocomplete="off"></label></div>
+                <label>接入方式<select id="agentMode" required></select></label>
+                <p class="agent-field-note" id="agentModeNote"></p>
+                <div id="agentCommandFields" class="agent-field-group" hidden>
+                  <label>可执行文件绝对路径<input id="agentCommand" placeholder="C:\工具目录\node.exe" autocomplete="off" spellcheck="false"></label>
+                  <label>参数（JSON 字符串数组）<textarea id="agentArgs" rows="3" spellcheck="false" placeholder='["C:\\工具目录\\入口脚本.js"]'>[]</textarea></label>
+                  <p class="agent-field-note" id="agentCliTemplateNote"></p>
+                  <label>工作目录（可选，绝对路径）<input id="agentCwd" autocomplete="off" spellcheck="false" placeholder="留空使用受管运行目录"></label>
+                  
+                </div>
+                <div id="agentHttpFields" class="agent-field-group" hidden><label>OpenClaw Gateway 地址<input id="agentEndpoint" type="url" placeholder="http://127.0.0.1:18789" autocomplete="off" spellcheck="false"></label><label>Agent ID（可选）<input id="agentConfigAgentId" placeholder="main" maxlength="100" autocomplete="off" spellcheck="false"></label></div>
+                <div id="agentExecutionFields" class="agent-field-group" hidden>
+                  <div class="form-row"><label>凭据环境变量名（可选）<input id="agentTokenEnv" placeholder="例如 OPENCLAW_GATEWAY_TOKEN" pattern="[A-Za-z_][A-Za-z0-9_]*" autocomplete="off" spellcheck="false"></label><label>超时（毫秒）<input id="agentTimeout" type="number" min="1000" max="3600000" step="1000" value="300000"></label></div>
+                  
+                </div>
+                <div class="agent-actions"><button class="primary-button" type="submit" id="agentSaveConnection">保存连接</button><button class="secondary-button" type="button" id="agentProbeConnection">检查协议 / 配置</button><button class="secondary-button" type="button" id="agentTestConnection" hidden>运行最小测试</button></div>
+                <p class="agent-field-note" id="agentTestNote" hidden>最小测试会调用执行器当前的模型，只发送固定测试文字，不挂载项目资料。可能消耗该执行器的模型额度。</p>
+                <p class="agent-field-note" id="agentProbeResult" aria-live="polite">保存配置不会启动执行器。</p>
+              </form>
+            </article>
+            </details>
+
+            <details id="agentMcpSettings" class="agent-mcp-settings"><summary>高级接入：MCP 与项目授权<span>仅在外部客户端需要调用 Hub 时配置</span></summary><article class="card agent-panel">
+              <div class="card-heading"><div><span class="section-kicker">INBOUND / MCP</span><h2>让外部 Agent 调用 Hub</h2></div><span class="agent-status" id="agentGatewayState">未开启</span></div>
+              <p class="agent-description">Agent 主动调用 Hub 时，使用独立的项目授权。开启工具服务不等于外部客户端已经连接。</p>
+              <div class="agent-gateway"><label>本机工具入口<input id="agentGatewayUrl" readonly placeholder="开启后显示实际地址" aria-label="本机工具入口地址" spellcheck="false"></label><button class="secondary-button" id="agentGatewayToggle" type="button">开启本机入口</button></div>
+              
+              <details class="agent-access-details" open><summary>创建项目授权</summary>
+                <form class="agent-form" id="agentGrantForm">
+                  <div class="form-row"><label>授权名称<input id="agentGrantLabel" maxlength="100" placeholder="例如 我的 ZCode" required autocomplete="off"></label><label>归属项目成员<select id="agentGrantMember" required></select></label></div>
+                  <fieldset class="agent-scopes"><legend>仅开放勾选的能力</legend>
+                    <label><input type="checkbox" name="agentScope" value="project:read" checked>项目信息</label><label><input type="checkbox" name="agentScope" value="tasks:read" checked>读取任务 / 运行</label><label><input type="checkbox" name="agentScope" value="skills:read" checked>读取专业 Skill</label><label><input type="checkbox" name="agentScope" value="knowledge:read">知识摘录</label><label><input type="checkbox" name="agentScope" value="tasks:write">创建任务</label><label><input type="checkbox" name="agentScope" value="runs:write">认领 / 提交成果</label>
+                    <label><input type="checkbox" name="agentScope" value="cases:read" checked>读取案例</label><label><input type="checkbox" name="agentScope" value="cases:write">采集案例</label>
+                  </fieldset>
+                  
+                  
+                  <button class="secondary-button" type="submit" id="agentCreateGrant">生成项目访问密钥</button>
+                </form>
+              </details>
+              <div class="agent-token-panel" id="agentTokenPanel" hidden><strong>密钥只在本次创建后显示</strong><p>复制到你信任的客户端后立即关闭。不会写入界面日志或浏览器存储；遗失请撤销并重建。</p><input id="agentNewToken" readonly type="password" autocomplete="off" aria-label="新建项目访问密钥"><div class="agent-actions"><button class="secondary-button" type="button" id="agentCopyToken">复制密钥</button><button class="text-button" type="button" id="agentClearToken">已保存，清除显示</button></div></div>
+              <section class="agent-client-config" aria-labelledby="agentClientConfigTitle">
+                <div class="card-heading"><div><span class="section-kicker">MCP CLIENT SETUP</span><h3 id="agentClientConfigTitle">客户端接入配置</h3></div><span class="event-tag" id="agentClientConfigState">尚未生成</span></div>
+                
+                <div class="agent-client-config-controls"><label>客户端传输<select id="agentClientTransport"><option value="stdio">stdio · 本机进程桥接</option><option value="http">HTTP · MCP 工具端点</option></select></label><button type="button" class="secondary-button" id="agentGenerateClientConfig">生成配置模板</button></div>
+                <label class="agent-config-secret-choice"><input type="checkbox" id="agentClientIncludeToken" disabled><span>包含本次新授权密钥</span></label>
+                <p class="agent-field-note" id="agentClientConfigNote" role="status">先开启本机入口，再生成配置。运行时路径和端口由 Hub 提供，无需手工拼接。</p>
+                <div id="agentClientConfigOutput" hidden><label class="agent-config-preview-label" for="agentClientConfigPreview">可复制的 JSON 配置</label><textarea id="agentClientConfigPreview" rows="9" readonly spellcheck="false" autocomplete="off" aria-describedby="agentClientConfigWarning"></textarea><p class="agent-field-note" id="agentClientConfigWarning"></p><div class="agent-actions"><button type="button" class="secondary-button" id="agentCopyClientConfig">复制完整配置</button><button type="button" class="text-button" id="agentClearClientConfig">清除模板显示</button></div></div>
+              </section>
+              <div class="agent-grant-list" id="agentGrantList" aria-label="已有项目授权"></div>
+            </article></details>
+          </div>
+          </div></dialog>
+          <dialog id="agentHistoryDialog" class="agent-dialog agent-history-dialog" aria-labelledby="agentHistoryTitle"><header class="agent-dialog-head"><div><h2 id="agentHistoryTitle">对话与任务记录</h2><p>对话、执行过程和验收结果都保存在本项目。</p></div><button class="icon-button" type="button" id="agentCloseHistory" aria-label="关闭历史记录">×</button></header><div class="agent-dialog-body"><div id="agentHistoryNotice" class="agent-notice" role="status" hidden></div><section class="agent-conversation-history"><h3>最近对话</h3><div id="agentConversationList"></div></section>
+          <details id="agentManualTaskDetails" class="agent-manual-task"><summary>高级任务：单独建立派单</summary>
+          <article class="card agent-panel agent-task-builder">
+            <div class="card-heading"><div><span class="section-kicker">DISPATCH A TASK</span><h2>建立任务并派单</h2></div><span class="event-tag" id="agentProjectLabel">当前项目</span></div>
+            <form class="agent-form" id="agentJobForm">
+              <div class="agent-job-fields"><label>任务标题<input id="agentJobTitle" maxlength="200" placeholder="例如 梳理任务书中的资料缺项" required></label><label>专业 Skill<select id="agentJobSkill" required></select></label><label>执行器<select id="agentJobConnection" required></select></label></div>
+              <label>具体指令与验收要求<textarea id="agentJobInstruction" rows="4" maxlength="20000" placeholder="写清目标、允许使用的资料、输出格式与验收要求。不要在这里放密码或未获准分享的资料。" required></textarea></label>
+              <label class="agent-config-secret-choice"><input type="checkbox" id="agentJobProjectTools"><span>允许本次执行只读检索本项目资料</span></label>
+              <div class="agent-task-footer"><p class="agent-field-note" id="agentJobSkillNote">选择执行器后，可直接派单，或先保存任务。</p><div class="agent-actions"><button class="secondary-button" type="submit" id="agentCreateJob">仅保存任务</button><button class="primary-button" type="submit" id="agentDispatchJob">建立并派单</button></div></div>
+            </form>
+          </article></details>
+          <div class="agent-work-grid">
+            <article class="card agent-panel"><div class="card-heading"><div><span class="section-kicker">TASKS & RUNS</span><h2>任务与执行记录</h2></div><span class="event-tag" id="agentJobCount">0 项任务</span></div><div class="agent-job-list" id="agentJobList"><p class="agent-empty">还没有 Agent 任务。先建立一项工作，再选择开始。</p></div></article>
+            <article class="card agent-panel agent-run-panel"><div class="card-heading"><div><span class="section-kicker">OUTPUT & REVIEW</span><h2 id="agentRunTitle">运行详情</h2></div><span class="agent-status" id="agentRunStatus">待选择</span></div><p class="agent-description" id="agentRunMeta">选择一项执行记录，查看固定输入、进度与待验收成果。</p>
+              <div id="agentRunContent" hidden>
+                <div class="agent-actions agent-run-actions"><button class="secondary-button" type="button" id="agentExportRun">导出任务包</button><button class="secondary-button" type="button" id="agentImportResult">导入成果 JSON</button><button class="text-button agent-danger" type="button" id="agentCancelRun">请求取消</button></div>
+                <p class="agent-field-note" id="agentRunModeNote"></p>
+                <details class="agent-input-details"><summary>本次固定输入与 Skill 版本</summary><pre class="agent-safe-text" id="agentRunInput"></pre></details>
+                <h3 class="agent-subheading">成果</h3><pre class="agent-safe-text agent-output" id="agentRunOutput">尚无成果。</pre>
+                <div class="agent-review" id="agentReviewPanel" hidden><p>请核对事实、来源与实际成果。通过后才会将关联业务任务标记完成。</p><div class="agent-actions"><button class="primary-button" type="button" id="agentApproveRun">人工验收通过</button><button class="secondary-button" type="button" id="agentRejectRun">退回修改</button></div></div>
+                <h3 class="agent-subheading">执行事件</h3><ol class="agent-event-list" id="agentRunEvents"></ol>
+              </div>
+            </article>
+          </div></div></dialog>
+        </section>
+
+        </template>
+        <section class="page-view" id="view-team" data-page-title="团队身份">
+          <div class="page-heading"><div><p class="eyebrow">TEAM PORTFOLIO</p><h1>跨项目团队总看板</h1><p>查看每位成员的项目配置、角色与已登记任务。项目角色也可以在聊天中的成员卡片管理。</p></div><button class="primary-button" id="inviteMemberButton">添加当前项目成员</button></div>
+          <div id="teamPortfolio"></div>
+          <div hidden class="legacy-hub-page"><span id="teamCurrentRole"></span><div id="teamGrid"></div><div id="roleMatrix"></div></div>
+        </section>
+      </div>
+    </main>
+
+    <div id="dshViewContainer" class="dsh-view-container is-hidden">
+      <div class="dsh-boot-overlay" id="dshBootOverlay">
+        <div class="dsh-boot-card">
+          <span class="dsh-boot-mark" aria-hidden="true">⇄</span>
+          <strong id="dshBootTitle">正在准备 Agent Hub</strong>
+          <p id="dshBootDetail">首次进入需要下载独立运行时，请稍候…</p>
+          <div class="dsh-boot-progress is-hidden" id="dshBootProgress"><span id="dshBootProgressFill"></span></div>
+          <button class="secondary-button" id="dshBootRetry" type="button" hidden>重试启动</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <button class="primary-button" id="askAiButton" type="button"><svg class="ask-ai-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.4l1.4 3.2 3.2 1.4-3.2 1.4L8 11.6 6.6 8.4 3.4 7l3.2-1.4z"/><path d="M12.6 10.9l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z"/></svg><span>聊天与项目AI</span></button>
+    </div>
+
+    <aside id="hubChatDock" class="hub-chat-dock" aria-label="全局项目聊天" hidden>
+      <header class="hub-chat-head"><div><span class="section-kicker">项目沟通</span><strong id="hubChatProject">当前项目</strong></div><div class="hub-chat-window-actions"><button id="hubChatExpand" class="icon-button" type="button" aria-label="展开聊天窗口" aria-pressed="false" title="展开聊天窗口">⤢</button><button id="hubChatClose" class="icon-button" type="button" aria-label="收起聊天">×</button></div></header>
+      <div class="hub-chat-modes" role="group" aria-label="沟通方式"><button id="hubChatGroupTab" class="is-active" type="button" aria-pressed="true">项目群聊</button><button id="hubChatAssistantTab" type="button" aria-pressed="false">项目助手</button></div>
+      <div id="hubChatNotice" class="hub-chat-notice" role="status" hidden></div>
+      <div id="hubChatDemoLoading" class="hub-chat-demo-loading" role="status"><p id="hubChatDemoLoadingText">正在准备项目群聊演示…</p><button id="hubChatDemoRetry" class="secondary-button" type="button" hidden>重新加载演示</button></div>
+      <div id="hubChatDemo" class="hub-chat-demo" hidden></div>
+      <div id="hubChatLive" class="hub-chat-live" hidden>
+      <div id="hubChatMessages" class="hub-chat-messages" role="log" aria-label="当前项目聊天记录"></div>
+      <form id="hubChatForm" class="hub-chat-composer">
+        <textarea id="hubChatInput" rows="3" maxlength="20000" aria-label="项目助手输入" placeholder="与项目助手单独沟通，询问当前页面或整理项目事项…"></textarea>
+        <div class="hub-chat-composer-actions"><div class="hub-chat-input-tools"><button id="hubChatModelSettings" class="text-button" type="button">模型设置</button><button id="hubChatContextLink" class="text-button" type="button">项目上下文</button><button id="hubChatSessionSettings" class="text-button" type="button" aria-label="本会话模型与资料范围" title="本会话模型与资料范围">会话设置</button></div><button id="hubChatSend" class="primary-button" type="submit">发送 ↑</button></div>
+      </form>
+      </div>
+    </aside>
+    <dialog id="hubDraftDialog" class="hub-dialog hub-draft-dialog"><header><strong>上下文候选 · 项目负责人审批</strong><button class="icon-button" id="hubDraftClose" aria-label="关闭审批详情">×</button></header><div id="hubDraftReviewMount"></div><p id="hubDraftNotice" class="hub-muted" role="status"></p></dialog>
+
+    <aside class="ai-drawer" id="aiDrawer" aria-hidden="true">
+      <div class="drawer-head"><div><span class="ai-orb">✦</span><span><strong>项目AI</strong><small id="drawerRole">面向项目设计师</small></span></div><button class="icon-button" id="closeAiDrawer">×</button></div>
+      <div class="drawer-context"><span>当前上下文</span><strong id="drawerContext">江湾文化商业中心 · 概念设计</strong></div>
+      <div class="drawer-messages" id="drawerMessages"><div class="ai-message"><span class="ai-orb small">✦</span><div><p>我已经结合你的项目角色、当前阶段和最近文件变化准备好上下文。</p><div class="suggestion-list"><button data-ai-suggestion="检查今天需要完成的设计任务">检查今天需要完成的设计任务</button><button data-ai-suggestion="查找商业街入口空间的对标案例">查找商业街入口空间的对标案例</button><button data-ai-suggestion="复核最新模型涉及的规范问题">复核最新模型涉及的规范问题</button></div></div></div></div>
+      <form class="ai-composer" id="aiComposer"><textarea id="aiInput" rows="2" placeholder="询问项目，或让AI准备一项工作……"></textarea><div><button type="button" class="attach-button" id="aiImportKnowledgeButton">＋ 添加项目资料</button><button class="primary-button" type="submit">发送</button></div></form>
+    </aside>
+
+    <div class="modal-backdrop" id="roleModal" aria-hidden="true">
+      <div class="modal role-modal" role="dialog" aria-modal="true" aria-labelledby="roleModalTitle">
+        <div class="modal-head"><div><span class="section-kicker">PROJECT ROLE</span><h2 id="roleModalTitle">切换看板关注视角</h2></div><button class="icon-button" data-close-modal>×</button></div>
+        
+        <div class="role-options" id="roleOptions"></div>
+      </div>
+    </div>
+
+    <div class="modal-backdrop case-preview-drawer" id="caseModal" aria-hidden="true">
+      <div class="modal case-research-modal" role="dialog" aria-modal="false" aria-labelledby="caseModalTitle">
+        <div class="modal-head case-preview-head"><div><span class="section-kicker">项目预览</span><h2 id="caseModalTitle">案例详情</h2></div><div class="case-preview-head-actions"><button class="text-button" id="casePreviewExpand" type="button" aria-expanded="false">展开阅读</button><button class="icon-button" data-close-modal aria-label="关闭案例详情">×</button></div></div>
+        <div class="case-preview-body">
+        <div class="case-preview-toolbar"><span id="casePreviewNotice" role="status">正在准备预览…</span><button class="text-button" id="casePreviewRefresh" type="button">刷新预览</button></div>
+        <div class="case-preview-tabs" role="tablist" aria-label="案例阅读方式"><button type="button" role="tab" aria-selected="true" aria-controls="caseArticlePanel" data-case-pane="article">本地原文</button><button type="button" role="tab" aria-selected="false" aria-controls="caseImagesPanel" data-case-pane="images">项目原图</button><button type="button" role="tab" aria-selected="false" aria-controls="caseFactsPanel" data-case-pane="facts">项目资料</button></div>
+        <section id="caseArticlePanel" role="tabpanel" aria-label="本地文章"><p id="caseArticleStatus" class="case-article-status" role="status">正在准备本地文章…</p><iframe id="caseArticleFrame" class="case-article-frame" title="已保存到本地的案例原文" sandbox="" referrerpolicy="no-referrer" hidden></iframe><details id="caseArticleFailures" class="case-article-failures" hidden><summary>未完成的图片</summary><div id="caseArticleFailureList"></div></details>
+        <details class="case-preview-article" id="casePreviewFallbackText" open><summary>网页正文 <span id="casePreviewTextMeta"></span></summary><div id="casePreviewText" class="case-preview-text"></div></details>
+        </section>
+        <section id="caseImagesPanel" role="tabpanel" aria-label="已保存的项目原图" hidden>
+        <div id="casePreviewMedia" class="case-preview-media" aria-label="项目图片"></div>
+        <div class="case-preview-more-row"><button class="secondary-button" id="casePreviewMore" type="button" hidden>加载更多项目图片</button><span id="casePreviewGalleryNote"></span></div>
+        <h3 id="casePreviewPageTitle" class="case-preview-page-title" hidden></h3>
+        <p id="casePreviewSummary" class="case-preview-summary"></p>
+        
+        </section>
+        <section id="caseFactsPanel" role="tabpanel" aria-label="项目资料与来源" hidden>
+        <div id="caseDetailOriginal" class="case-detail-original"></div>
+        <h3 class="case-detail-subheading">项目资料与调研依据</h3>
+        <div class="case-detail-status"><span class="agent-status" id="caseDetailStatus">未调研</span><span id="caseDetailMeta"></span></div>
+        
+        <div id="caseDetailError" class="case-detail-error" role="status" hidden></div>
+        <section id="caseMatchCandidates" class="case-match-candidates" hidden aria-label="可能匹配的项目"></section>
+        <div class="case-evidence-grid" id="caseDetailFields"></div>
+        <h3 class="case-detail-subheading" id="caseDetailNotesHeading">调研摘要 · 待核实</h3><pre class="agent-safe-text case-detail-summary" id="caseDetailNotes"></pre>
+        <h3 class="case-detail-subheading">来源记录</h3><div id="caseDetailSources" class="case-detail-sources"></div>
+        <label id="caseRetryQueryField" class="case-retry-query" hidden>补充项目名称、城市、设计方或公开链接<input id="caseRetryQuery" maxlength="4096" minlength="2" autocomplete="off"></label>
+        <div class="case-detail-operations"><label>重新调研执行器<select id="caseRetryConnection"></select></label><button type="button" class="secondary-button" id="caseRetryButton">重新采集 / 调研</button><button type="button" class="text-button" id="caseShowRun">查看 Agent 运行</button></div>
+        <p class="agent-field-note" id="caseRetryNote">重新采集会产生新的调研记录，原始链接保留。</p>
+        <div id="caseReviewActions" class="case-review-actions" hidden><button type="button" class="primary-button" id="caseApproveButton">人工确认字段</button><button type="button" class="secondary-button" id="caseRejectButton">退回补充证据</button></div>
+        <div class="modal-actions"><button class="secondary-button" data-close-modal>关闭</button></div>
+        </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="decisionModal" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="decisionModalTitle">
+        <div class="modal-head"><div><span class="section-kicker accent">PROJECT DECISION</span><h2 id="decisionModalTitle">形成项目决策</h2></div><button class="icon-button" data-close-modal>×</button></div>
+        <p class="modal-intro">正式决策会写入当前频道，并与原始聊天消息建立证据关系。</p>
+        <div class="decision-form"><label>决策标题<input id="decisionTitleInput" placeholder="例如：主入口不设置独立大门构筑物"></label><label>决策内容<textarea id="decisionSummaryInput" rows="5" placeholder="明确决定、适用范围和后续影响"></textarea></label><div class="form-row"><label>责任人<select id="decisionOwnerInput"></select></label><label>状态<select id="decisionStatusInput"><option value="proposed">待确认</option><option value="confirmed">已确认</option></select></label></div></div>
+        <div class="source-message-preview is-hidden" id="sourceMessagePreview"></div>
+        <div class="modal-actions"><button class="secondary-button" data-close-modal>取消</button><button class="primary-button" id="saveDecisionButton">保存项目决策</button></div>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="memberModal" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="memberModalTitle">
+        <div class="modal-head"><div><span class="section-kicker">PROJECT MEMBER</span><h2 id="memberModalTitle">添加项目成员</h2></div><button class="icon-button" data-close-modal>×</button></div>
+        <div class="collector-grid"><label>姓名<input id="memberNameInput" placeholder="成员姓名"></label><label>职位<input id="memberTitleInput" placeholder="例如：建筑设计师"></label><label>项目角色<select id="memberRoleInput"><option value="designer">项目设计师</option><option value="pm">项目经理</option><option value="director">设计总监</option><option value="reviewer">校审负责人</option><option value="finance">经营 / 财务</option></select></label><label>擅长能力<input id="memberSkillsInput" placeholder="用逗号分隔"></label></div>
+        <div class="modal-actions"><button class="secondary-button" data-close-modal>取消</button><button class="primary-button" id="saveMemberButton">加入项目</button></div>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="teamSyncModal" aria-hidden="true">
+      <div class="modal team-sync-modal" role="dialog" aria-modal="true" aria-labelledby="teamSyncModalTitle">
+        <div class="modal-head"><div><span class="section-kicker">TEAM SYNC</span><h2 id="teamSyncModalTitle">团队同步与当前身份</h2></div><button class="icon-button" data-close-modal>×</button></div>
+        <div class="sync-status-card" id="teamSyncStatusCard">
+          <span class="sync-status-icon">●</span>
+          <div><strong id="teamSyncStatusTitle">仅保存在这台电脑</strong><p id="teamSyncStatusDetail">可以直接使用本地聊天、决策和知识库。</p></div>
+        </div>
+        <label class="identity-select">我在本项目中是
+          <select id="currentMemberSelect"></select>
+          <small>这里决定聊天消息显示的发言人；角色视角仍可在左下角身份卡中切换。</small>
+        </label>
+        <div class="sync-choice-grid">
+          <section>
+            <span class="section-kicker">创建项目主机</span>
+            <h3>让这台电脑保存团队数据</h3>
+            <p>适合同一办公室或通过企业 VPN / 私有网络协作。主机关闭时，其他成员暂时不能同步，但本机数据不受影响。</p>
+            <div class="sync-button-row"><button class="secondary-button" id="startLocalTeamServer">仅本机测试</button><button class="primary-button" id="startLanTeamServer">启动局域网协作</button></div>
+          </section>
+          <section>
+            <span class="section-kicker accent">加入项目主机</span>
+            <h3>连接另一位成员的项目</h3>
+            <label>服务器地址<input id="teamServerUrlInput" placeholder="例如 http://192.168.1.20:43120"></label>
+            <label>项目访问密钥<input id="teamServerTokenInput" type="password" placeholder="粘贴主机提供的密钥"></label>
+            <button class="primary-button" id="connectTeamServer">连接并同步</button>
+          </section>
+        </div>
+        <div class="sync-invite is-hidden" id="teamInvitePanel">
+          <div><strong>把下面两项发给项目成员</strong><p>只发给本项目成员；访问密钥相当于项目房间密码。</p></div>
+          <label>服务器地址<input id="teamInviteUrl" readonly></label>
+          <label>访问密钥<input id="teamInviteToken" readonly></label>
+          <button class="secondary-button" id="copyTeamInvite">复制邀请信息</button>
+        </div>
+        
+        <div class="modal-actions"><button class="text-button danger-text" id="disconnectTeamSync">断开团队同步</button><button class="secondary-button" data-close-modal>完成</button></div>
+      </div>
+    </div>
+
+    <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  </div>
+  <script src="case-ui.js"></script>
+  <script src="project-research-ui.js"></script>
+  <script src="adh-workbench-ui.js"></script>
+  <script src="ai-design-ui.js"></script>
+  <script src="image-collection-ui.js"></script>
+  <script src="project-hub-ui.js"></script>
+  <script src="team-directory-ui.js"></script>
+  <script src="context-review-demo.js"></script>
+  <script src="chat-demo-ui.js"></script>
+  <script src="hub-chat-ui.js"></script>
+  <script src="project-context-ui.js"></script>
+  <script src="knowledge-workbench-ui.js"></script>
+  <script src="app-v2.js"></script>
+  <script src="setup-center-ui.js"></script>
+  <script src="release-info-ui.js"></script>
+</body>
+</html>

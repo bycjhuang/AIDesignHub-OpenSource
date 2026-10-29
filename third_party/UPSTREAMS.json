@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "auditedOn": "2026-10-29",
+  "components": [
+    {
+      "id": "deepseek-harness",
+      "name": "DeepSeek Harness",
+      "version": "0.2.1-rc.2",
+      "repository": "https://github.com/deepseek-ai/deepseek-harness",
+      "ref": "dsh-v0.2.1-rc.2",
+      "commit": "687f282e8625c6b8d11ff58211a90524be2e4317",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 DeepSeek",
+      "licenseFile": "third_party/deepseek-harness/LICENSE",
+      "licenseGitBlob": "c1f7a78e89e4e4dc7b86664c3b3c76eb5eee1785",
+      "licenseUrl": "https://github.com/deepseek-ai/deepseek-harness/blob/687f282e8625c6b8d11ff58211a90524be2e4317/LICENSE",
+      "npm": "https://registry.npmjs.org/@deepseek-ai/dsh/0.2.1-rc.2",
+      "tarball": "https://registry.npmjs.org/@deepseek-ai/dsh/-/dsh-0.2.1-rc.2.tgz",
+      "integrity": "sha512-tvY+yhfKRifthbqPe/OK0AYxM5ZkvqfYq/jMYgJcEUxiRRL1Vwra3Ti5TB6AXgSWQdiPHYh/Vp6SJa9yHwMNuw==",
+      "integration": "Embedded npm runtime plus Hub-owned configuration, model gateway and plugins; the public runtime does not include user accounts or credentials."
+    },
+    {
+      "id": "loomic",
+      "name": "Loomic",
+      "repository": "https://github.com/fancyboi999/Loomic",
+      "commit": "21206c30054572291b9df000d84568aeca97aeda",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2026 Xinmin Zeng",
+      "licenseFile": "third_party/loomic/LICENSE",
+      "licenseGitBlob": "567e7377795724ced99a1ce7e6e7264313c93890",
+      "licenseUrl": "https://github.com/fancyboi999/Loomic/blob/21206c30054572291b9df000d84568aeca97aeda/LICENSE",
+      "localSource": "Loomic-main/Loomic-main",
+      "preservedLicenseFile": "Loomic-main/Loomic-main/LICENSE",
+      "modifications": "Loomic-main/Loomic-main/ADAPTATIONS.md",
+      "importEvidence": "The original GitHub ZIP comment identifies the pinned commit. The archive itself is a local build input and is not published."
+    },
+    {
+      "id": "excalidraw",
+      "name": "Excalidraw",
+      "version": "0.18.0",
+      "repository": "https://github.com/excalidraw/excalidraw",
+      "commit": "817d8c553c3389650f8b4503984a6d4a5d2f0c11",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2020 Excalidraw",
+      "licenseFile": "third_party/excalidraw/LICENSE",
+      "licenseGitBlob": "8a844bc750a313db95d147bea9e4c9537b2cebc0",
+      "licenseUrl": "https://github.com/excalidraw/excalidraw/blob/817d8c553c3389650f8b4503984a6d4a5d2f0c11/LICENSE",
+      "fontNotices": "third_party/excalidraw/FONT-LICENSES.md"
+    },
+    {
+      "id": "elkjs",
+      "name": "elkjs",
+      "version": "0.12.1",
+      "repository": "https://github.com/kieler/elkjs",
+      "commit": "624ae90aa37110033a8af59c5ccbb292708b4317",
+      "license": "EPL-2.0 OR GPL-3.0-or-later",
+      "selectedLicense": "GPL-3.0-or-later",
+      "licenseFile": "third_party/licenses/elkjs-LICENSE.md",
+      "licenseGitBlob": "91dd37eefbe62d3d9fb7a1e7e2c7a9a1e2cdcbcc",
+      "source": "third_party/elkjs/SOURCE.md"
+    }
+  ],
+  "scope": "This record verifies the named upstream project licenses and pins their source references. It is not a blanket assertion that every dependency, font, model or professional bridge is MIT or has completed a full legal audit. Their own licenses and notices remain applicable."
+}

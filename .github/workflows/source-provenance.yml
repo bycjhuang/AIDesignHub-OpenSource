@@ -1,0 +1,44 @@
+name: Source archive provenance
+
+on:
+  workflow_dispatch:
+    inputs:
+      attest:
+        description: Generate GitHub attestation (private repositories require Enterprise Cloud)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Scan source and package the exact commit
+        shell: bash
+        run: |
+          node scripts/release-security.cjs --source
+          mkdir -p release
+          git archive --format=tar HEAD | gzip -n > release/AIDesignHub-source.tar.gz
+          sha256sum release/AIDesignHub-source.tar.gz > release/SHA256SUMS.txt
+      - name: Attest source archive
+        if: inputs.attest
+        uses: actions/attest@v4
+        with:
+          subject-path: release/AIDesignHub-source.tar.gz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: source-${{ github.sha }}
+          path: release/*
+
+# This attests the source archive only. The local Windows installer has its own
+# detached release signature; this workflow does not claim to rebuild or attest it.

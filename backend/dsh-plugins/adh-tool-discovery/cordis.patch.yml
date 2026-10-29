@@ -1,0 +1,3 @@
+- insert:
+    - id: adh-tool-discovery
+      name: '@aidesign/dsh-tool-discovery'

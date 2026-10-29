@@ -1,0 +1,12 @@
+{
+  "sourceProject": "BYCJ Design desktop",
+  "source": "src/features/knowledge-base/knowledgeTasks.ts",
+  "sha256": "25219b06437b02448672c789a82063139a419f96c1006e254f345d7c63a66cfa",
+  "transpiler": "esbuild",
+  "transpilerVersion": "0.28.1",
+  "target": "node22",
+  "format": "cjs",
+  "runtimeDependencies": [],
+  "note": "Full source port. No BYCJ user data, account configuration or service endpoints are included.",
+  "generatedSha256": "173f22b4655844c3b42e069458e8dc5eb4ce30368d16a409297fc9f65b526082"
+}

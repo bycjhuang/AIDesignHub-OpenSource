@@ -1,0 +1,3 @@
+- insert:
+    - id: adh-skill-library
+      name: '@aidesign/dsh-client-ui-skill-library'

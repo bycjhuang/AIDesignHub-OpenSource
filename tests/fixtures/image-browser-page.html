@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>网页图片采集离线验收</title>
+<meta property="og:image" content="/images/og.png">
+<style>
+body { margin:0;background:#f0f3f6;font:16px system-ui;color:#172234 }
+header { padding:40px;background:#172234;color:white }
+main { max-width:920px;margin:auto;padding:30px }
+.grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px }
+img,.background { width:230px;height:150px;object-fit:cover;background:#e5d2aa }
+.background { background-image:url('/images/background.png');border-radius:12px }
+.pseudo::before { content:'';display:block;background:url('/images/pseudo.png');height:90px }
+.spacer { height:1800px }
+iframe { width:300px;height:120px;border:1px solid #ccc }
+</style></head><body>
+<header><h1>AIDesignHub 网页图片采集</h1><p>真实 Chromium 渲染，资源来自本地测试夹具。</p></header>
+<main><div class="grid">
+<img src="/images/static.png" alt="普通图片">
+<picture><source media="(min-width:1px)" srcset="/images/picture-small.png 480w, /images/picture-large.png 1440w"><img src="/images/picture-fallback.png" alt="响应式 picture"></picture>
+<img srcset="/images/density-1.png 1x, /images/density-2.png 2x" src="/images/density-fallback.png" alt="像素密度 srcset">
+<div class="background"></div><div class="pseudo"></div>
+<img data-original="/images/original.png" data-src="/images/lazy-attribute.png" alt="懒加载属性">
+</div>
+<iframe src="/frame.html"></iframe><iframe src="https://cross-frame.example.org/frame.html"></iframe>
+<div id="shadow"></div><a href="/must-not-follow">不能自动点击的链接</a>
+<div class="spacer"></div><div id="scroll-reveal"></div><img loading="lazy" src="/images/native-lazy.png" alt="浏览器懒加载">
+</main>
+<script>
+window.fixtureIsolation = { require:typeof require, process:typeof process, bridge:typeof window.bycjWorkbench };
+const shadow=document.getElementById('shadow').attachShadow({mode:'open'});
+shadow.innerHTML='<img src="/images/shadow.png" alt="开放 Shadow DOM">';
+fetch('/images/network-only.png');
+fetch('http://127.0.0.1:19999/private').catch(()=>{});
+fetch('https://rebind.example.org/private.png').catch(()=>{});
+fetch('/unsafe-redirect').catch(()=>{});
+fetch('/forbidden-post',{method:'POST',body:'fixture'}).catch(()=>{});
+try { new WebSocket('ws://127.0.0.1:19999/socket'); } catch {}
+setTimeout(()=>{
+ const dynamic=document.createElement('img');dynamic.alt='稍后插入的图片';dynamic.src='/images/dynamic.png';
+ document.querySelector('.grid').appendChild(dynamic);
+},650);
+let revealed=false;
+addEventListener('scroll',()=>{
+ if(!revealed&&scrollY>800){revealed=true;document.getElementById('scroll-reveal').innerHTML='<img src="/images/after-scroll.png" alt="滚动后才显示">'}
+});
+window.open('https://popup.example.org/');
+</script></body></html>

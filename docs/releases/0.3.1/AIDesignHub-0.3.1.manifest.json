@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "product": "AIDesignHub",
+  "version": "0.3.1",
+  "releaseId": "ADH-0.3.1-c7f07f04-fd40-4438-8667-d42dc28b81f6",
+  "sourceCanary": "AIDesignHub.SourceCanary.0.3.1.0e5048c7-c8f9-49d1-896e-8cefc2710583",
+  "repository": "https://github.com/bycjhuang/AIDesignHub",
+  "builtFrom": {
+    "schema": 1,
+    "gitCommit": "3b23afb7495b47a8eec050dfc2df06c46ed9f05e",
+    "workingTreeDirty": false,
+    "sourceFiles": 1064,
+    "sourceSha256": "d08a485e4a475c4a54841c435758dd8685a82489d6686de7b8815fd89c353cc3",
+    "node": "v24.21.0",
+    "platform": "win32",
+    "arch": "x64",
+    "builtAt": "2026-10-28T19:12:56.403Z",
+    "reproducibleBuildVerified": false
+  },
+  "artifacts": [
+    {
+      "file": "AIDesignHub-Setup-0.3.1.exe",
+      "bytes": 648632104,
+      "sha256": "5cd87caaa92a86871ae01789db313fbc1d744cc9fdad5097e26510951dc73e3b"
+    }
+  ],
+  "signatureType": "Ed25519 detached manifest; not Windows Authenticode",
+  "signedAt": "2026-10-28T19:23:40.259Z"
+}
