@@ -1,0 +1,5 @@
+任务：网站进入时自动展示较大的产品介绍视频弹窗，引导全屏；左侧导航触发小窗，必须手动关闭。
+现状：两域已上线 web-demo-20261030-d76c0640e3cc，保留 b332d1242025 的 Agent 主题/品牌修复与统一顶栏。直接使用原中文版横版成片（600秒、2560×1440、163767934字节）；SHA256 为414efe7576747fe1e762886568d77c760fd4893689dd038df6fda626a58993e5，未重剪或重编码。
+关键文件：web-public/intro-video.js、intro-video.css、intro-media.json、intro-cover.jpg、toolbar.html；scripts/build-public-demo.cjs、publish-public-intro.py、preview-public-demo.cjs、deploy-public-demo.py、package-public-demo-source.py。验证、媒体收据及截图位于 .runtime/website-demo-20261030/intro-*。
+已定决定：每次加载自动大窗，默认静音且可开启声音；大小窗复用单个播放器，转换保留进度。导航后出现小窗，空白点击、等待与普通Esc均不关闭，只有关闭按钮关闭并暂停/释放媒体源；全屏Esc只退出全屏，小窗保留。媒体以不可变散列文件独立存放 /srv/aidesignhub-public/media，仅精确公开一个MP4路径，支持HEAD/Range；不重复塞进每版静态包。原 /intro/ 交互介绍、BYCJ账号与其他业务保留。
+下一步：本次已完成。4项既有账号/Agent测试、JS/Python检查、电脑/390/320布局、导航/声音/手动关闭/进度/真实全屏及退出回归通过；线上确认600秒视频静音实播、左侧导航打开小窗，两域30项资源/视频首中尾分段/HEAD/匿名下载与旧介绍入口检查通过。回退先核对后续发布，用 deploy-public-demo.py rollback --apply 返回上一迭代；原有无视频版为 b332d1242025，可从本次两次部署的 before.json 追溯，保留独立公开视频无需删除。 本次 moderate 图索引刷新仍受控崩溃，新增文件以源码为准。

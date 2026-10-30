@@ -96,6 +96,10 @@ const ADH_SHELL_CSS = `<style id="adh-shell-cosmetics">
     font-size: 0.62em;
     animation: adh-hero-tag 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
+  @media (max-width: 600px) {
+    .adh-hero-name { font-size: clamp(20px, 6vw, 28px); }
+    .adh-hero-tag { font-size: clamp(10px, 3.3vw, 16px); }
+  }
   @keyframes adh-hero-name {
     0%   { opacity: 0; transform: translateY(0.28em); }
     8%   { opacity: 1; transform: translateY(0); }

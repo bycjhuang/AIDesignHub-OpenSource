@@ -12,6 +12,8 @@ AI Design Hub 面向建筑、室内、景观等设计团队，把项目上下文
 
 **[下载 0.3.2 Windows x64 安装包与对应源码](https://github.com/bycjhuang/AIDesignHub-OpenSource/releases/tag/v0.3.2)**。安装器约 **630.7 MiB**，附源码 ZIP、Ed25519 签名清单及验签工具；见 [本版发布验收](docs/release-0.3.2-2026-10-29.md) 与 [开源审核记录](docs/open-source-audit-2026-10-29.md)。旧版 0.3.1 的原有签名与验收记录保留。
 
+**[在线工作台演示](https://aidesignhub.work)**（[备用入口](https://adh.bycjdesign.com)）使用虚构项目和预设回复，支持画布、Agent 界面及主题体验；真实模型与专业软件操作使用桌面版。线上部署、本地源码和接手步骤见 [2026-10-30 handoff](docs/HANDOFF-2026-10-30.md)。
+
 开源源码与官方安装包见 [AIDesignHub-OpenSource](https://github.com/bycjhuang/AIDesignHub-OpenSource)。许可范围见 [LICENSE](LICENSE)、[COPYRIGHT.md](COPYRIGHT.md) 与 [第三方声明](THIRD-PARTY-NOTICES.md)。AGPL 允许遵守协议的商业使用与衍生发行，不保证阻止合规的改名销售。用户项目、知识资料和模型密钥不随源码公开，用户输出也不会仅因使用本软件而自动受 AGPL 约束。
 
 ## 为什么做：设计公司遇到的五个问题
@@ -109,7 +111,7 @@ flowchart LR
 
 ## 安装与启动
 
-Windows 用户可使用本地生成的 **AIDesignHub-Setup-0.3.1.exe**，按向导选择安装位置，然后从桌面或开始菜单启动。安装包携带画布静态资源、ADH Agent、专业 MCP 运行资源及离线知识引擎，不要求首次启动时再下载这些组件。调用在线模型、采集网页及使用外部 Agent 仍需要相应网络与账号。当前安装包尚未签名。
+Windows 用户可使用正式发布的 **AIDesignHub-Setup-0.3.2.exe**，按向导选择安装位置，然后从桌面或开始菜单启动。安装包携带画布静态资源、ADH Agent、专业 MCP 运行资源及离线知识引擎，不要求首次启动时再下载这些组件。调用在线模型、采集网页及使用外部 Agent 仍需要相应网络与账号。发布清单带 Ed25519 签名，安装器尚无 Windows Authenticode 签名。
 
 已有本机运行环境可双击 `启动-AI设计工作台原型.cmd`。
 
@@ -154,7 +156,7 @@ npm run audit:release
 npm run dist
 ```
 
-`dist` 会重建画布、复制明确列出的运行资源、过滤用户配置与缓存、扫描安装内容，最后生成 `release/AIDesignHub-Setup-0.3.1.exe`。安装包只分发程序与公开运行资源，使用者在自己的电脑上配置模型和项目。
+`dist` 会重建画布、复制明确列出的运行资源、过滤用户配置与缓存、扫描安装内容，最后生成 `release/AIDesignHub-Setup-0.3.2.exe`。安装包只分发程序与公开运行资源，使用者在自己的电脑上配置模型和项目。
 
 ## 本地数据与隐私边界
 
